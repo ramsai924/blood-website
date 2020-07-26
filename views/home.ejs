@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@900&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/public/style/home.css">
+</head>
+<body>
+
+    <div >
+        <nav class="navbar navbar-expand-sm navbar-transparent" style="margin-top: 0px;">
+            <div class="container">
+                <!-- Brand/logo -->
+                <a class="navbar-brand" href="#">Logo</a>
+                
+                <!-- Links -->
+                <ul class="navbar-nav" id="navbar-res">
+                    <!-- <li class="nav-item" style="margin-left:5px">
+                        <a class="nav-link" href="#" >Profile</a>
+                    </li> -->
+                  <%  if(typeof userset != undefined){ %>
+                       <% if(userset === true){ %>
+                       <li class="nav-item" style="margin-left:5px">
+                            <a style="margin:12px;" href="/profile" style="background: transparent;"><span style="color: black;font-weight: bold;">About us</span></a>
+                            <a style="margin:12px;" href="/profile" style="background: transparent;"><span style="color: black;font-weight: bold;">Contact us</span></a>
+                            <a style="margin:15px;" href="/profile" style="background: transparent;"><span style="color: black;font-weight: bold;">Profile</span></a>
+                            <a class="btn btn-primary" href="/logout" style="background: transparent;"><span style="color: black;font-weight: bold;">Logout</span></a>
+                        </li>
+                       <% }else{ %>
+                            <li class="nav-item">
+                            <a style="margin:12px;" href="/profile" style="background: transparent;"><span style="color: black;font-weight: bold;">About us</span></a>
+                            <a style="margin:12px;" href="/profile" style="background: transparent;"><span style="color: black;font-weight: bold;">Contact us</span></a>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"
+                                    style="background: transparent;">
+                                    <span style="color: black;font-weight: bold;">Sign in</span>
+                                </button>
+                            </li>
+                      <%  } %>
+                  <%  } %>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <% if(message.length > 0){ %>
+    <div class="alert alert-success alert-dismissible fade show" style="position: fixed;" role="alert" id="alerts">
+        <strong><%= message %></strong> 
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true" style="text-decoration: none;">&times;</span>
+        </button>
+    </div>
+
+    <% } %>
+
+    
+   <%  if(typeof userData != undefined){ %>
+        <% if(userData ===  false){ %>
+            <div class="alert alert-warning alert-dismissible fade show" style="position: fixed;margin-top: 5%;" role="alert" id="alerts1">
+                <strong>Please update Donar Details..!!</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <% } %>
+   <%  } %>
+    
+
+    <div class="main" style="margin-top: -60px;">
+            <div class="bg" style="height: 750px;">
+                <div class="mainHead">
+                    <h1 style="font-family: 'Prompt', sans-serif;">Donate Blood</h1>
+                  <div style="margin-top: 20px;">
+                        <p>“There is no exercise better</p>
+                        <p>for the heart than reaching down</p>
+                        <p>and lifting people up. ”</p>
+                        <p style="margin-top: 15px;font-weight:900;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             – John Holmes</p>
+                  </div>
+                </div>
+            </div>
+        </div>
+  
+
+    <div class="container" >
+        <!-- Button to Open the Modal -->
+    
+    
+        <!-- The Modal -->
+        <div class="modal modal fade" id="myModal" style="margin-top: 20px;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+    
+                    <!-- Modal Header -->
+                    <div class="modal-header" style="display: flex;justify-content: space-around;">
+                       
+                            <div style="padding: 5px 10px 10px 20px;background-color: white;width: 100%;margin: 2px;text-align: center;cursor: pointer;" id="upact">
+                                <h6 class="modal-title" id="signup">sign up</h6>
+                            </div>
+                            <div style="padding: 5px 10px 10px 20px;background-color: grey;width: 100%;margin: 2px;text-align: center;cursor: pointer;" id="inact">
+                                <h6 class="modal-title" id="signin">sign in</h6>
+                            </div>
+                       
+                     
+                    </div>
+    
+                    <!-- Modal body -->
+                    <div class="modal-body">
+
+                        <!-- Register form -->
+                       <div style="display: block;" id="sinupform">
+                            <form action="/register" method="POST">
+                                <div class="form-group">
+                                    <label for="name">Name:</label>
+                                    <input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email:</label>
+                                    <input type="email" class="form-control" id="email" placeholder="Enter Email" name="email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phoneNumber">PhoneNumber:</label>
+                                    <input type="text" class="form-control" id="phoneNumber" placeholder="Enter phoneNumber" name="phoneNumber">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phoneNumber">User Type:</label>
+                                    <select id="usertype" name="usertype" class="form-control">
+                                        <option value="donar">Register as Donar</option>
+                                        <option value="search">Searching donar</option>
+                                        <option value="pdonar">Plasma donar</option>
+                                        <option value="psearch">Searching Plasma donar</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">password:</label>
+                                    <input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
+                                </div>
+                            
+                                
+                            
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+                            </div>
+                       
+                        <!-- Login form -->
+                        <div style="display: none;" id="sininform">
+                         
+                            <form action="/login" method="POST">
+                                
+                                <div class="form-group">
+                                    <label for="email">Email:</label>
+                                    <input type="text" class="form-control" id="email" placeholder="Enter Email" name="emails">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="password">password:</label>
+                                    <input type="password" class="form-control" id="password" placeholder="Enter password" name="passwords">
+                                </div>
+                        
+                        
+                        
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                        </form>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    
+    </div>
+
+    <div class="registrations">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4" style="margin-top:6px;text-align: center;">
+                    <div id="cards">
+                    
+                    <div style="background-color: cornflowerblue;padding: 5px;">
+                        <img src="/public/images/donar.png" width="150" height="150" style="padding: 10px;margin-top: 20px;">
+                        <p class="card-title">Register Donar</p> 
+                        
+                    </div>
+                    <p style="padding: 5px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam unde.</p>
+                    <a href="/donardonate">click here</a>
+                    </div>
+                </div>
+                <div class="col-md-4" style="margin-top:6px;text-align: center;">
+                    <div id="cards">
+                    
+                    <div style="background-color: cornflowerblue;padding: 5px;">
+                        <img src="/public/images/search.png" width="150" height="150" style="padding: 10px;margin-top: 20px;">
+                        <p class="card-title">Search Donar</p>
+                    </div>
+                    <p style="padding: 5px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam unde.</p>
+                    <a href="/searchdonar">click here</a>
+                    </div>
+                </div>
+                <div class="col-md-4" style="margin-top:6px;text-align: center;">
+                    <div id="cards">
+                    
+                    <div style="background-color: cornflowerblue;padding: 5px;">
+                        <img src="/public/images/banks.png" width="150" height="150" style="padding: 10px;margin-top: 20px;">
+                        <p class="card-title">Blood banks</p>
+                         
+                    </div>
+                    <p style="padding: 5px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam unde.</p>
+                    <a href="#">click here</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        setTimeout(() => {
+            document.getElementById("alerts").style.display = "none"
+        },3000);
+        setTimeout(() => {
+                document.getElementById("alerts1").style.display = "none"
+            }, 3000);
+    </script>
+    <script src="/public/scripts/home.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+</body>
+</html>

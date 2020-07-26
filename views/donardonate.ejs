@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/public/style/donatedonar.css">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <div>
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <div class="container">
+                <!-- Brand/logo -->
+                <a class="navbar-brand" href="/">Logo</a>
+
+                <!-- Links -->
+                <ul class="navbar-nav" id="navbar-res">
+                    <!-- <li class="nav-item" style="margin-left:5px">
+                            <a class="nav-link" href="#" >Profile</a>
+                        </li> -->
+                    <%  if(userset){ %>
+                    <li class="nav-item" style="margin-left:5px">
+                        <a style="margin:20px;" href="/profile" style="background: transparent;">profile</a>
+                        <a class="btn btn-primary" href="/logout" style="background: transparent;">Logout</a>
+                    </li>
+                    <% }else{ %>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"
+                            style="background: transparent;">
+                            Sign in
+                        </button>
+                    </li>
+                    <%  } %>
+
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container">
+        <% if(message.length > 0){ %>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong><%= message %></strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true" style="text-decoration: none;">&times;</span>
+            </button>
+        </div>
+        <% } %>
+    </div>
+    
+
+
+        <div class="container" class="donarform">
+            <div  id="donarform"> 
+                <form action="/donardonate" method="POST">
+                    <div class="form-group">
+                        <label for="Bloodgroup">Blood group :</label>
+                        <select id="Bloodgroup" name="Bloodgroup" class="form-control">
+                            <option value="">select</option>
+                            <option value="O-">O-</option>
+                            <option value="O+">O+ </option>
+                            <option value="A-">A-</option>
+                            <option value="A+">A+</option>
+                            <option value="B-">B-</option>
+                            <option value="B+">B+</option>
+                            <option value="AB-">AB-</option>
+                            <option value="AB+">AB+</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="userid">userid:</label>
+                        <%  if(userset){ %>
+                        <input type="text" class="form-control" name="userid" value="<%= userset._id %>">
+                        <input type="text" class="form-control" id="usertype"  name="usertype" value="<%= userset.usertype %>">
+                        <% }%>
+                    </div>
+                    <div class="form-group">
+                        <label for="hno">H-no :</label>
+                        <input type="text" class="form-control" id="hno" placeholder="Enter hno" name="hno">
+                    </div>
+                    <div class="form-group">
+                        <label for="village">Village :</label>
+                        <input type="text" class="form-control" id="village" placeholder="Enter village" name="village">
+                    </div>
+                    <div class="form-group">
+                        <label for="zipcode">Zipcode:</label>
+                        <input type="text" class="form-control" id="zipcode" placeholder="Enter zipcode" name="zipcode">
+                    </div>
+                    <div class="form-group">
+                        <label for="mandal">Mandal:</label>
+                        <input type="text" class="form-control" id="mandal" placeholder="Enter mandal" name="mandal">
+                    </div>
+                    <div class="form-group">
+                        <label for="district">District:</label>
+                        <input type="text" class="form-control" id="district" placeholder="Enter district" name="district">
+                    </div>
+                    <div class="form-group">
+                        <label for="state">State:</label>
+                        <input type="text" class="form-control" id="state" placeholder="Enter state" name="state">
+                    </div>
+                
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+</body>
+
+</html>

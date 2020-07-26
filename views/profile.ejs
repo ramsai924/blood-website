@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/public/style/home.css">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+<div>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <div class="container">
+            <!-- Brand/logo -->
+            <a class="navbar-brand" href="/">Logo</a>
+
+            <!-- Links -->
+            <ul class="navbar-nav" id="navbar-res">
+                <!-- <li class="nav-item" style="margin-left:5px">
+                            <a class="nav-link" href="#" >Profile</a>
+                        </li> -->
+                <%  if(userset){ %>
+                <li class="nav-item" style="margin-left:5px">
+                    <a class="btn btn-primary" href="/profile" style="background: transparent;">profile</a>
+                    <a class="btn btn-primary" href="/logout" style="background: transparent;">Logout</a>
+                </li>
+                <% }else{ %>
+                <li class="nav-item">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"
+                        style="background: transparent;">
+                        Sign in
+                    </button>
+                </li>
+                <%  } %>
+
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<% if(userset){ %>
+    <div class="container">
+       
+            <div>
+                <p><%= userset.name %></p>
+                <p><%= userset.email %></p>
+                <p><%= userset.usertype %></p>
+            </div>
+       <% } %>
+    </div>
+
+   <% if(typeof userData === "object" && userData.length !=0 || typeof search === "object" && search.length != 0 ){ %>
+        <div class="container">
+            <% if(userData){ %>
+            <% userData.forEach((data) => { %>
+            <div>
+                <p><%= data.Bloodgroup %></p>
+                <p><%= data.Donatstatus %></p>
+            </div>
+            <% }) %>
+            <% } %>
+        </div>
+        
+        <div class="container">
+            <% if(search){ %>
+            <% search.forEach((data) => { %>
+            <div>
+                <p><%= data.Bloodgroup %></p>
+                <p><%= data.Donatstatus %></p>
+            </div>
+            <% }) %>
+            <% } %>
+        </div>
+   <% }else{ %>
+        <div class="container">
+            <p>You have no activity</p>
+        </div>
+   <% } %>
+</body>
+
+</html>
