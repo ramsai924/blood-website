@@ -73,7 +73,7 @@ app.post('/register',urlencodedParser,async (req,res) => {
         }); 
 })
 
-
+//profile route
 app.get("/profile",auth,async (req,res) => {
     try {
       var userset = await User.findById({ _id: req.session.userid })
@@ -81,24 +81,57 @@ app.get("/profile",auth,async (req,res) => {
       var userData;
       var search;
 
-      if (userset.usertype == "donar") {
+      // if (userset.usertype == "donar") {
         const donar = await Donar_donate.find({ userid: req.session.userid })
         userData = donar
-      }
+      // }
 
 
-      if (userset.usertype == "search") {
+      // if (userset.usertype == "search") {
         const searched = await search_donar_post.find({ userid: req.session.userid })
         search = searched;
-      }
-  
-      res.render("profile", { userset, userData, search })
+      // }
+      
+      res.render("profile", { userset, userData, search , message : req.flash('message') })
     
     } catch (error) {
       // res.status(500).json({ success: false, error: error.message });
       console.log(error)
       // res.redirect("/");
     }
+})
+
+//update profile
+app.post("/editprofile/:id", urlencodedParser,async (req,res) => {
+  try {
+      const user = await User.findByIdAndUpdate({ _id : req.params.id } , req.body , { new : true , runValidators : true })
+      req.flash("message", "profile updated");
+      res.redirect("/profile");
+  } catch (error) {
+    console.log(error)
+  }
+});
+
+//Delete post
+app.get("/deletepost/:id",async (req,res) => {
+  try {
+    const searched = await search_donar_post.findByIdAndDelete({ _id : req.params.id })
+    req.flash("message", "Post deleted success");
+    res.redirect("/profile")
+  } catch (error) {
+    console.log(error)
+  }
+});
+
+//edit post
+app.post("/editpost/:id",urlencodedParser,async (req,res) => {
+  try {
+    const searched = await search_donar_post.findByIdAndUpdate({ _id : req.params.id } , req.body , { new : true , runValidators : true })
+    req.flash("message", "Post updated success");
+    res.redirect("/profile")
+  } catch (error) {
+    console.log(error)
+  }
 })
 
 

@@ -6,46 +6,46 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@900&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/public/style/home.css">
 </head>
 <body>
 
-    <div >
-        <nav class="navbar navbar-expand-sm navbar-transparent" style="margin-top: 0px;">
-            <div class="container">
-                <!-- Brand/logo -->
-                <a class="navbar-brand" href="#">Logo</a>
-                
-                <!-- Links -->
-                <ul class="navbar-nav" id="navbar-res">
-                    <!-- <li class="nav-item" style="margin-left:5px">
-                        <a class="nav-link" href="#" >Profile</a>
-                    </li> -->
-                  <%  if(typeof userset != undefined){ %>
+    <div>
+    <div class="topnav" id="myTopnav">
+        <div class="container">
+            <a href="/" class="active home-tag" style="color: black;">Home</a>
+            <div id="alignment">
+                <%  if(typeof userset != undefined){ %>
                        <% if(userset === true){ %>
-                       <li class="nav-item" style="margin-left:5px">
-                            <a style="margin:12px;" href="/profile" style="background: transparent;"><span style="color: black;font-weight: bold;">About us</span></a>
-                            <a style="margin:12px;" href="/profile" style="background: transparent;"><span style="color: black;font-weight: bold;">Contact us</span></a>
-                            <a style="margin:15px;" href="/profile" style="background: transparent;"><span style="color: black;font-weight: bold;">Profile</span></a>
-                            <a class="btn btn-primary" href="/logout" style="background: transparent;"><span style="color: black;font-weight: bold;">Logout</span></a>
-                        </li>
+                       
+                            <a  href="/profile">About us</a>
+                            <a  href="/profile">Contact us</a>
+                            <a  href="/profile">Profile</a>
+                            <a  href="/logout">Logout</a>
+                    
                        <% }else{ %>
-                            <li class="nav-item">
-                            <a style="margin:12px;" href="/profile" style="background: transparent;"><span style="color: black;font-weight: bold;">About us</span></a>
-                            <a style="margin:12px;" href="/profile" style="background: transparent;"><span style="color: black;font-weight: bold;">Contact us</span></a>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"
-                                    style="background: transparent;">
-                                    <span style="color: black;font-weight: bold;">Sign in</span>
-                                </button>
-                            </li>
+                            <a  href="/profile">Abouts us</a>
+                            <a  href="/profile">Contact us</a>
+                            <a href="/profile" data-toggle="modal" data-target="#myModal" style="background: transparent;">Sign in</a>
                       <%  } %>
                   <%  } %>
-                </ul>
             </div>
-        </nav>
+            <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                <i style="font-size: 30px;display: none;" class="fa fa-times" aria-hidden="true"></i>
+                <i style="font-size: 30px;" class="fa fa-bars" aria-hidden="true"></i>
+            </a>
+        </div>
     </div>
+    </div>
+
+    <div class="res-navs">
+    
+    </div>
+
+    
     <% if(message.length > 0){ %>
-    <div class="alert alert-success alert-dismissible fade show" style="position: fixed;" role="alert" id="alerts">
+    <div class="alert alert-success alert-dismissible" style="position: fixed;background-color: lightgreen;" role="alert" id="alerts">
         <strong><%= message %></strong> 
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true" style="text-decoration: none;">&times;</span>
@@ -57,12 +57,25 @@
     
    <%  if(typeof userData != undefined){ %>
         <% if(userData ===  false){ %>
-            <div class="alert alert-warning alert-dismissible fade show" style="position: fixed;margin-top: 5%;" role="alert" id="alerts1">
-                <strong>Please update Donar Details..!!</strong>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+            <div id="topalerts">
+                <div class="container">
+                    <div id="popupss">
+                        <div>
+                            <p>Please post Donar details..!!</p>
+                        </div>
+                        <div style="margin-top: 20px;">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"
+                                style="background: transparent;">
+                                <span style="color: black;font-weight: bold;">Post</span>
+                            </button>
+            
+                            <button class="btn btn-primary" onclick="closealert()">close</button>
+                        </div>
+                    </div>
+                </div>
+            
             </div>
+      
         <% } %>
    <%  } %>
     
@@ -189,36 +202,36 @@
                 <div class="col-md-4" style="margin-top:6px;text-align: center;">
                     <div id="cards">
                     
-                    <div style="background-color: cornflowerblue;padding: 5px;">
+                    <div style="background-color: #00aeef;padding: 5px;">
                         <img src="/public/images/donar.png" width="150" height="150" style="padding: 10px;margin-top: 20px;">
-                        <p class="card-title">Register Donar</p> 
+                        <p class="card-title" style="font-weight: 700;">Register Donar</p> 
                         
                     </div>
                     <p style="padding: 5px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam unde.</p>
-                    <a href="/donardonate">click here</a>
+                    <a href="/donardonate" class="btn btn-primary">click here</a>
                     </div>
                 </div>
                 <div class="col-md-4" style="margin-top:6px;text-align: center;">
                     <div id="cards">
                     
-                    <div style="background-color: cornflowerblue;padding: 5px;">
+                    <div style="background-color: #00aeef;padding: 5px;">
                         <img src="/public/images/search.png" width="150" height="150" style="padding: 10px;margin-top: 20px;">
-                        <p class="card-title">Search Donar</p>
+                        <p class="card-title" style="font-weight: 700;">Search Donar</p>
                     </div>
                     <p style="padding: 5px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam unde.</p>
-                    <a href="/searchdonar">click here</a>
+                    <a href="/searchdonar" class="btn btn-primary">click here</a>
                     </div>
                 </div>
                 <div class="col-md-4" style="margin-top:6px;text-align: center;">
                     <div id="cards">
                     
-                    <div style="background-color: cornflowerblue;padding: 5px;">
+                    <div style="background-color: #00aeef;padding: 5px;">
                         <img src="/public/images/banks.png" width="150" height="150" style="padding: 10px;margin-top: 20px;">
-                        <p class="card-title">Blood banks</p>
+                        <p class="card-title" style="font-weight: 700;">Blood Banks</p>
                          
                     </div>
                     <p style="padding: 5px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam unde.</p>
-                    <a href="#">click here</a>
+                    <a href="#"  class="btn btn-primary" >click here</a>
                     </div>
                 </div>
             </div>
@@ -226,6 +239,34 @@
     </div>
     
     <script>
+         function myFunction() {
+                var x = document.getElementById("myTopnav");
+                if (x.className === "topnav") {
+                    x.className += " responsive";
+                    
+                    document.querySelector(".topnav").style.background = "black"
+                    document.querySelector(".fa-times").style.display = "block"
+                    document.querySelector("#alignment").style.display = "block"
+                } else {
+                    x.className = "topnav";
+                    document.querySelector(".topnav").style.background = "transparent"
+                    document.querySelector("#alignment").style.display = "none"
+                    document.querySelector(".fa-times").style.display = "none"
+                }
+            }
+
+          
+
+        window.addEventListener('scroll', function () {
+                if (window.pageYOffset > 30) {
+                    document.querySelector("#topalerts").style.top = "0px"
+                    console.log("kj")
+                } else if (window.pageYOffset < 500) { document.getElementById("topalerts").style.top = "-15%" }
+            }); function
+                closealert() { document.getElementById("topalerts").style.top = "-15%" } setTimeout(() => {
+                    document.getElementById("alerts").style.display = "none"
+                }, 3000);
+
         setTimeout(() => {
             document.getElementById("alerts").style.display = "none"
         },3000);

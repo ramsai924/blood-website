@@ -64,7 +64,7 @@ search_donar_schema.pre('save', async function (next) {
 
     this.location = {
         type: "Point",
-        coordinates: [Getlocation[0].longitude, Getlocation[1].latitude],
+        coordinates: [Getlocation[0].longitude, Getlocation[0].latitude],
         city: Getlocation[0].city,
     };
 

@@ -23,7 +23,8 @@ app.post("/",checkuser,urlencodedParser, async (req, res) => {
           req.flash("message", "Details posted sucess");
           res.redirect("/searchdonar");
         } catch (error) {
-        res.status(500).json({ error })
+            console.log(error)
+        // res.status(500).json({ error })
     }
 });
 
