@@ -1,285 +1,450 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-     
-      <link rel="stylesheet" href="/public/style/home.css">
-    <title>Document</title>
-    <style>
-      .null{
-        display: block;
-      }
-      #alerts{
-        position: fixed;
-        margin-top: 3.5%;
-      }
-    
-      @media (max-width: 575.98px) { 
-          #alerts{
-          position: fixed;
-          margin-top: 15%;
-        }
-      }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@900&display=swap" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/public/style/home.css">
+  <style>
+
+
+  </style>
 </head>
+
 <body>
 
+  <div style="position: relative;top: 50%;">
+    <div class="topnav" id="myTopnav" style="background-color: black;">
+      <div class="container">
+        <a href="/" class="active home-tag" id="home">Home</a>
+        <div id="alignment">
+          <%  if(typeof userset != undefined){ %>
+          <% if(userset === true){ %>
 
-    <div>
-      <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <div class="container">
-          <!-- Brand/logo -->
-          <a class="navbar-brand" href="/">Logo</a>
-    
-          <!-- Links -->
-          <ul class="navbar-nav" id="navbar-res">
-            <!-- <li class="nav-item" style="margin-left:5px">
-                            <a class="nav-link" href="#" >Profile</a>
-                        </li> -->
+          <a href="/">About us</a>
+          <a href="/">Contact us</a>
+          <a href="/profile">Profile</a>
+          <a href="/logout">Logout</a>
+
+          <% }else{ %>
+          <a href="/">Abouts us</a>
+          <a href="/">Contact us</a>
+          <a href="/">Sign
+            in</a>
+          <%  } %>
+          <%  } %>
+        </div>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+
+          <i style="font-size: 30px;color: white;" class="fa fa-bars" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="res-navs">
+
+  </div>
+
+
+  <% if(message.length > 0){ %>
+  <div class="alert alert-success alert-dismissible" style="position: fixed;background-color: lightgreen;" role="alert"
+    id="alerts">
+    <strong><%= message %></strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true" style="text-decoration: none;">&times;</span>
+    </button>
+  </div>
+
+  <% } %>
+
+
+
+  <div class="container">
+    <div style="margin-top: 15px;" class="text-center">
+      <button id="btnss" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+        style="height: 60px;">Donar register</button>
+      <button id="btnss" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal1"
+        style="height: 60px;">Patient register</button>
+    </div>
+
+    <!--donar register -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Donar Details</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
             <%  if(typeof userset != undefined){ %>
             <% if(userset === true){ %>
-            <li class="nav-item" style="margin-left:5px">
-              
-              <a class="btn btn-primary" href="/profile" style="background: transparent;">profile</a>
-              <a class="btn btn-primary" href="/logout" style="background: transparent;">Logout</a>
-            </li>
-            <% }else{ %>
-            <li class="nav-item">
-              <a class="btn btn-primary" href="/" style="background: transparent;">Sign in</a>
-            </li>
-            <%  } %>
-          <%  } %>
-          </ul>
-        </div>
-      </nav>
-    </div>
-
-    
-    <div class="">
-      <% if(message.length > 0){ %>
-      <div class="alert alert-success alert-dismissible" role="alert" id="alerts" >
-        <strong><%= message %></strong>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true" style="text-decoration: none;">&times;</span>
-        </button>
-      </div>
-      <% } %>
-    </div>
-
-    <% if(userdata){ %>
-    <% if(userdata.usertype === "search"){ %>
-      <div class="container" style="margin-top: 5px;">
-        <div style="width: 100%;height: 50px;background-color: lightpink;border: 2px solid lightcoral;display: flex;justify-content: center;"> 
-
-          <div style="padding: 10px;">
-            <p style="font-weight: 500;">Post patient Details : </p>
-          </div>
-         <div style="margin-left: 10px;padding: 3px;">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"
-              style="background: transparent;">
-              <span style="color: black;font-weight: bold;">click Here</span>
-            </button>
-         </div>
-
-        </div>
-      </div>
-  <%  } %>
-   <% } %>
-
-    <div class="container">
-    <div style="display: flex;text-align: center;">
-        <button style="display: none;" id="turnon">+</button>
-        <p style="display: none;" id="turnon1">Click here Turn on the location</p>
-    </div>
-      <div style="margin-top: 10px;">
-        <form action="/searchdonar" method="GET">
-          <input type="hidden" name="longitute" id="longitudes" value="">
-          <input type="hidden" name="latitude" id="latitudes" value="">
-          <p></p>
-          <select id="bloodgroup" name="bloodgroup" style="padding: 2px;">
-            <option value="null" id="selected">select</option>
-            <option value="O-">O-</option>
-            <option value="O+">O+ </option>
-            <option value="A-">A-</option>
-            <option value="A+">A+</option>
-            <option value="B-">B-</option>
-            <option value="B+">B+</option>
-            <option value="AB-">AB-</option>
-            <option value="AB+">AB+</option>
-          </select>
-          <input type="text" name="distance" id="distance" value="" placeholder="Enter Km's">
-          <input type="submit" value="search" id="submit">
-        </form>
-      </div>
-        
-    </div>
-
-    <!-- The Modal -->
-    <div class="modal modal fade" id="myModal" style="margin-top: 20px;">
-      <div class="modal-dialog">
-        <div class="modal-content">
-    
-          <!-- Modal Header -->
-          <div class="modal-header" style="display: flex;justify-content: space-around;">
-    
-           <h4 style="text-align: center;">Patient Details</h4> 
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-    
-    
-          </div>
-    
-          <!-- Modal body -->
-          <div class="modal-body">
-            <div style="background: lightgreen;">
-              <p style="padding: 10px;">we will get back to you soon and chcek your activity in profile</p>
+              <% if(userdata && userdata.usertype == "donar"){ %>
+            <form action="/searchdonar/donardonate" method="POST">
+            <div class="form-group">
+              <label for="Bloodgroup">Blood group :</label>
+              <select id="Bloodgroup" name="Bloodgroup" class="form-control">
+                <option value="">select</option>
+                <option value="O-">O-</option>
+                <option value="O+">O+ </option>
+                <option value="A-">A-</option>
+                <option value="A+">A+</option>
+                <option value="B-">B-</option>
+                <option value="B+">B+</option>
+                <option value="AB-">AB-</option>
+                <option value="AB+">AB+</option>
+              </select>
             </div>
-            <!-- Register form -->
-            <div>
-              <form action="/searchdonarpost" method="POST">
-                <div class="form-group">
-                  <label for="patientname">patientname: <span style="color: red;">*</span> </label>
-                  <input type="text" class="form-control" id="patientname" placeholder="Enter patientname" name="patientname" required>
-                </div>
-                <div class="form-group">
-                  <label for="date">Date of donation: <span style="color: red;">*</span> </label>
-                  <input type="date" class="form-control" id="date" placeholder="Enter date" name="date" required>
-                </div>
-                <div class="form-group">
-                  <label for="Bloodgroup">Blood group : <span style="color: red;">*</span></label>
-                  <select id="Bloodgroup" name="Bloodgroup" class="form-control">
-                    <option value="">select</option>
-                    <option value="O-">O-</option>
-                    <option value="O+">O+ </option>
-                    <option value="A-">A-</option>
-                    <option value="A+">A+</option>
-                    <option value="B-">B-</option>
-                    <option value="B+">B+</option>
-                    <option value="AB-">AB-</option>
-                    <option value="AB+">AB+</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="hospitalName">hospitalName: <span style="color: red;">*</span></label>
-                  <input type="text" class="form-control" id="hospitalName" placeholder="Enter hospitalName" name="hospitalName">
-                </div>
-                <div class="form-group">
-                  <label for="PhoneNumber">PhoneNumber: <span style="color: red;">*</span></label>
-                  <input type="text" class="form-control" id="PhoneNumber" placeholder="Enter PhoneNumber"
-                    name="PhoneNumber">
-                </div>
-                <% if(userdata){ %>
-                
-                    <input type="text" class="form-control" name="userid" value="<%= userdata._id %>">
-                  
-                <% } %>
-                
-                <div class="form-group">
-                  <label for="zipcode">Zipcode: <span style="color: red;">*</span></label>
-                  <input type="text" class="form-control" id="zipcode" placeholder="Enter zipcode" name="zipcode">
-                </div>
-                <div class="form-group">
-                  <label for="city">city: <span style="color: red;">*</span></label>
-                  <input type="text" class="form-control" id="city" placeholder="Enter city" name="city">
-                </div>
-                <div class="form-group">
-                  <label for="district">District: <span style="color: red;">*</span></label>
-                  <input type="text" class="form-control" id="district" placeholder="Enter district" name="district">
-                </div>
-                <div class="form-group">
-                  <label for="state">State: <span style="color: red;">*</span></label>
-                  <input type="text" class="form-control" id="state" placeholder="Enter state" name="state">
-                </div>
-
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    
-
-    <div class="container">
-        <% if(typeof data != 'undefined'){ %>
-        <% if(data.length != 0){ %>
-        <% data.forEach((dt) => { %>
-          <div style="background: grey;padding: 10px;margin-top: 5px;">
-              <% if(dt.userid != undefined){ %>
-              <div style="display: flex;justify-content: space-around;">
-                  <div>
-                    <img src="/public/images/<%=  dt.Bloodgroup %>.png" alt="" width="150" height="100" style="border-radius: 50px;margin-top: 9px;">
-                  </div>
-                  <div>
-                      <p>Name : <%= dt.userid.name %></p>
-                      <p>phoneNumber : <%= dt.userid.phoneNumber %></p>
-                      <p>Blood group :<%=  dt.Bloodgroup %></p>
-                  </div>
-                  <div>
-                      <p>village : <%= dt.village %></p>
-                      <p>City : <%= dt.location.city %></p>
-                      <p>zipcode : <%= dt.zipcode %></p>
-                      
-                  </div>
-               
-              </div>
-              <% }else{ %>
-              <p>User details not found</p>
-              <p>Blood group :<%=  dt.Bloodgroup %></p>
-              <% } %>
+            <div class="form-group">
+              <label for="userid">userid:</label>
               
-                <div>
-                  <% if(userdata){ %>
-                  <form action="/searchdonar/save" method="post" id="formdata">
-                    <input type="hidden" name="save" value="<%= dt._id %>">
-                    <input type="hidden" name="view" value="<%= userdata._id %>">
-                    <input type="submit" value="save">
-                  </form>
-                  <%  } %>
-                </div>
-             
-          </div>
-        <% }) %>
-        <% }else{ %>
-       
-        <p style="text-align: center;margin-top: 25%;">No Donars found <a href="/searchdonar">Go back...!</a></p>
-        <% } %>
-        <% } %>
-    </div>
-
-
-  
-   
-    <script src="/public/scripts/serachdonar.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <script>     
+              <input type="text" class="form-control" name="userid" value="<%= userdata._id %>">
+              <input type="text" class="form-control" id="usertype" name="usertype" value="<%= userdata.usertype %>">
+              
+            </div>
+            <div class="form-group">
+              <label for="hno">H-no :</label>
+              <input type="text" class="form-control" id="hno" placeholder="Enter hno" name="hno">
+            </div>
+            <div class="form-group">
+              <label for="village">Village :</label>
+              <input type="text" class="form-control" id="village" placeholder="Enter village" name="village">
+            </div>
+            <div class="form-group">
+              <label for="zipcode">Zipcode:</label>
+              <input type="text" class="form-control" id="zipcode" placeholder="Enter zipcode" name="zipcode">
+            </div>
+            <div class="form-group">
+              <label for="mandal">Mandal:</label>
+              <input type="text" class="form-control" id="mandal" placeholder="Enter mandal" name="mandal">
+            </div>
+            <div class="form-group">
+              <label for="district">District:</label>
+              <input type="text" class="form-control" id="district" placeholder="Enter district" name="district">
+            </div>
+            <div class="form-group">
+              <label for="state">State:</label>
+              <input type="text" class="form-control" id="state" placeholder="Enter state" name="state">
+            </div>
           
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+          <% }else { %>
+            <p>If you want to post donar details update your user type to donar and try to post</p>
+          <% } %>
+            <%  } else { %>
+            <p>Please login and try again</p>
+            <% } %>
+            <%  } %>
 
-            const { longitute,latitude,distance, bloodgroup } = Qs.parse(location.search, { ignoreQueryPrefix: true })
+          </div>
+        </div>
+      </div>
+    </div>
 
-            console.log(bloodgroup)
-            if(bloodgroup != undefined){
-            document.getElementById("selected").value = bloodgroup;
-            }
-            if(distance !== undefined){
-                document.querySelector("#distance").value = distance;
-            }else{
-                document.querySelector("#distance").value = "";
-            }
-            document.getElementById("range").innerText = distance; 
 
-    </script>
+    <!-- patient -->
+    <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Patient Details</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <%  if(typeof userset != undefined){ %>
+            <% if(userset === true){ %>
+              <% if(userdata && userdata.usertype == "search"){ %>
+        <form action="/searchdonar/searchdonarpost" method="POST">
+          <div class="form-group">
+            <label for="patientname">patientname: <span style="color: red;">*</span> </label>
+            <input type="text" class="form-control" id="patientname" placeholder="Enter patientname" name="patientname"
+              required>
+          </div>
+          <div class="form-group">
+            <label for="date">Date of donation: <span style="color: red;">*</span> </label>
+            <input type="date" class="form-control" id="date" placeholder="Enter date" name="date" required>
+          </div>
+          <div class="form-group">
+            <label for="Bloodgroup">Blood group : <span style="color: red;">*</span></label>
+            <select id="Bloodgroup" name="Bloodgroup" class="form-control">
+              <option value="">select</option>
+              <option value="O-">O-</option>
+              <option value="O+">O+ </option>
+              <option value="A-">A-</option>
+              <option value="A+">A+</option>
+              <option value="B-">B-</option>
+              <option value="B+">B+</option>
+              <option value="AB-">AB-</option>
+              <option value="AB+">AB+</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="hospitalName">hospitalName: <span style="color: red;">*</span></label>
+            <input type="text" class="form-control" id="hospitalName" placeholder="Enter hospitalName" name="hospitalName">
+          </div>
+          <div class="form-group">
+            <label for="PhoneNumber">PhoneNumber: <span style="color: red;">*</span></label>
+            <input type="text" class="form-control" id="PhoneNumber" placeholder="Enter PhoneNumber" name="PhoneNumber">
+          </div>
+        
+        
+          <input type="text" class="form-control" name="userid" value="<%= userdata._id %>">
+        
+         
+        
+          <div class="form-group">
+            <label for="zipcode">Zipcode: <span style="color: red;">*</span></label>
+            <input type="text" class="form-control" id="zipcode" placeholder="Enter zipcode" name="zipcode">
+          </div>
+          <div class="form-group">
+            <label for="city">city: <span style="color: red;">*</span></label>
+            <input type="text" class="form-control" id="city" placeholder="Enter city" name="city">
+          </div>
+          <div class="form-group">
+            <label for="district">District: <span style="color: red;">*</span></label>
+            <input type="text" class="form-control" id="district" placeholder="Enter district" name="district">
+          </div>
+          <div class="form-group">
+            <label for="state">State: <span style="color: red;">*</span></label>
+            <input type="text" class="form-control" id="state" placeholder="Enter state" name="state">
+          </div>
+        
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+        <% }else { %>
+        <p>If you want to post patient details update your user type to search and try to post</p>
+        <% } %>
+            <% } else{ %>
+            <p>Please register and try</p>
+            <% } %>
+            <%  } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><br><br>
+
+
+  <div class="container">
+    <div>
+      <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2">search Donar</button>
+      <hr>
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+
+            <div class="modal-header" style="display: flex;justify-content: space-around;">
+
+              <div
+                style="padding: 5px 10px 10px 20px;background-color: white;width: 100%;margin: 2px;text-align: center;cursor: pointer;"
+                id="upact">
+                <h6 class="modal-title" id="Yourlocation">Your loaction</h6>
+              </div>
+              <div
+                style="padding: 5px 10px 10px 20px;background-color: grey;width: 100%;margin: 2px;text-align: center;cursor: pointer;"
+                id="inact">
+                <h6 class="modal-title" id="customlocation">Custom location</h6>
+              </div>
+
+
+            </div>
+
+
+            <div class="modal-body">
+
+              <div id="yourloc">
+                <form action="/searchdonar" method="GET">
+                  <input type="hidden" name="longitute" id="longitudes" value="">
+                  <input type="hidden" name="latitude" id="latitudes" value="">
+
+                  <div style="margin: 10px;">
+
+
+                    <select id="bloodgroup" name="bloodgroup" style="padding: 2px;">
+                      <option value="null" id="selected">select Blood group</option>
+                      <option value="O-">O-</option>
+                      <option value="O+">O+ </option>
+                      <option value="A-">A-</option>
+                      <option value="A+">A+</option>
+                      <option value="B-">B-</option>
+                      <option value="B+">B+</option>
+                      <option value="AB-">AB-</option>
+                      <option value="AB+">AB+</option>
+                    </select>
+                  </div>
+                  <div style="margin: 10px;">
+                    <input type="text" name="distance" id="distance" value="" placeholder="Enter Km's">
+                  </div>
+
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                  </div>
+                </form>
+              </div>
+
+              <div style="display: none;" id="custloc">
+                <form action="/searchdonar" method="GET">
+
+                  <div style="margin: 10px;">
+
+
+                    <select id="bloodgroup" name="bloodgroup" style="padding: 2px;">
+                      <option value="null" id="selected">select Blood group</option>
+                      <option value="O-">O-</option>
+                      <option value="O+">O+ </option>
+                      <option value="A-">A-</option>
+                      <option value="A+">A+</option>
+                      <option value="B-">B-</option>
+                      <option value="B+">B+</option>
+                      <option value="AB-">AB-</option>
+                      <option value="AB+">AB+</option>
+                    </select>
+                  </div>
+                  <div style="margin: 10px;">
+                    <input type="text" name="distance" id="distance" value="" placeholder="Enter Km's">
+                  </div>
+
+                  <div style="margin: 10px;">
+                    <input type="text" name="zipcode" id="zipcode" value="" placeholder="Enter zipcode & city">
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                  </div>
+                </form>
+
+              </div>
+
+
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<div class="container">
+  <% if(typeof data != 'undefined'){ %>
+  <% if(data.length != 0){ %>
+  <% data.forEach((dt) => { %>
+  <div style="background: grey;padding: 10px;margin-top: 5px;">
+    <% if(dt.userid != undefined){ %>
+    <div style="display: flex;justify-content: space-around;">
+      <div>
+        <img src="/public/images/<%=  dt.Bloodgroup %>.png" alt="" width="150" height="100"
+          style="border-radius: 50px;margin-top: 9px;">
+      </div>
+      <div>
+        <p>Name : <%= dt.userid.name %></p>
+        <p>phoneNumber : <%= dt.userid.phoneNumber %></p>
+        <p>Blood group :<%=  dt.Bloodgroup %></p>
+      </div>
+      <div>
+        <p>village : <%= dt.village %></p>
+        <p>City : <%= dt.location.city %></p>
+        <p>zipcode : <%= dt.zipcode %></p>
+
+      </div>
+
+    </div>
+    <% }else{ %>
+    <p>User details not found</p>
+    <p>Blood group :<%=  dt.Bloodgroup %></p>
+    <% } %>
+
+    <div>
+      <% if(userdata){ %>
+      <form action="/searchdonar/save" method="post" id="formdata">
+        <input type="hidden" name="save" value="<%= dt._id %>">
+        <input type="hidden" name="view" value="<%= userdata._id %>">
+        <input type="submit" value="save">
+      </form>
+      <%  } %>
+    </div>
+
+  </div>
+  <% }) %>
+  <% }else{ %>
+
+  <p style="text-align: center;margin-top: 25%;">No Donars found <a href="/searchdonar">Go back...!</a></p>
+  <% } %>
+  <% } %>
+</div>
+
+
+  <script src="/public/scripts/plasma.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>
+  <script>
+
+    function myFunction() {
+      var x = document.getElementById("myTopnav");
+      if (x.className === "topnav") {
+        x.className += " responsive";
+
+
+        document.querySelector(".fa-times").style.display = "block"
+
+      } else {
+        x.className = "topnav";
+
+        document.querySelector(".fa-times").style.display = "none"
+      }
+    }
+
+    //top popup event
+    window.addEventListener('scroll', function () {
+      if (window.pageYOffset > 30) {
+        document.querySelector("#topalerts").style.top = "0px"
+
+      } else if (window.pageYOffset < 500) { document.getElementById("topalerts").style.top = "-15%" }
+    }); function
+      closealert() { document.getElementById("topalerts").style.top = "-15%" } setTimeout(() => {
+        document.getElementById("alerts").style.display = "none"
+      }, 3000);
+
+    //time out for warining bootsrap alert
+    setTimeout(() => {
+      document.getElementById("alerts").style.display = "none"
+    }, 3000);
+    setTimeout(() => {
+      document.getElementById("alerts1").style.display = "none"
+    }, 3000);
+
+    //query selector
+    const { longitute, latitude, distance, bloodgroup } = Qs.parse(location.search, { ignoreQueryPrefix: true });
+
+  </script>
+
 </body>
+
 </html>

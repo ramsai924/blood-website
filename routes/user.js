@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const flash = require('connect-flash')
 const Donar_donate = require("../models/Donar_donate")
 const search_donar_post = require("../models/serach_donar_post")
+const Plasma_post = require("../models/plasma_post")
 const User = require('../models/userModel')
 const app = express()
 
@@ -24,21 +25,23 @@ app.get("/",async (req,res) => {
     try {
       var userData; // this is for donars to notify to update details
       var userset; // checking user is login or not
-
+      var checkplasmauser;
       const userId = req.session.userid;
       if (userId) {
         userset = true;
         const user = await User.findById({ _id: userId })
         if(user.usertype == "donar"){
           const donar = await Donar_donate.find({ userid: userId });
-          // console.log(donar)
+          const plasmauser = await Plasma_post.find({ userid : userId })
+          // console.log()
+          if (plasmauser.length != 0) { checkplasmauser = true } else { checkplasmauser = false  }
           if (donar.length != 0 ) { userData = true } else { userData = false }
         }
       } else {
         userset = false;
       } 
-      
-      res.render("home", { userset, userData , message : req.flash('message') })
+      console.log(checkplasmauser)
+      res.render("home", { userset, userData, checkplasmauser, message : req.flash('message') })
     } catch (error) {
       // res.redirect("/")
       console.log(error)
@@ -86,6 +89,7 @@ app.get("/profile",auth,async (req,res) => {
         userData = donar
       // }
 
+      const plasma_posts = await Plasma_post.find({ userid: req.session.userid })
 
       // if (userset.usertype == "search") {
         const searched = await search_donar_post.find({ userid: req.session.userid })
@@ -148,5 +152,10 @@ app.get("/logout",(req,res) => {
     res.redirect("/")
   })
 })
+
+// //404 page
+// app.get('*', function (req, res) {
+//   res.status(404).render('404');
+// });
 
 module.exports = app;

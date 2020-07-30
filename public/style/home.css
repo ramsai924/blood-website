@@ -42,7 +42,8 @@ top: 0%;
 width: 100%;
 height: 100px;
 transition: 0.5s;
-background-color: green;
+background-color: white;
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 z-index: 1;
 }
 #popupss{
@@ -61,10 +62,10 @@ left: 10%;
 }
 }
 #cards{
-    padding: 5px;
+    padding: 3px;
     margin: 0;
     width: 100%;
-    height: 370px;
+    height: auto;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .fa-bars{
@@ -100,13 +101,15 @@ left: 10%;
 }
 
 @media screen and (max-width: 600px) {
-  .topnav a:not(:first-child) {display: none;}
+  .topnav a {display: none;}
+  #home{
+    display: block;
+  }
   .topnav a{
     font-size: 20px;
   }
   #alignment{
     float: left;
-    display: none;
 }
   .topnav{
       background-color: transparent;

@@ -4,6 +4,7 @@ const userRoute = require('./routes/user')
 const donardonate = require('./routes/Donar_donate')
 const searchdonars = require('./routes/search_donar')
 const search_donar_post = require('./routes/serach_donar_post')
+const plasma = require("./routes/plasma")
 const mongoose = require('mongoose')
 const session = require('express-session')
 const flash = require('connect-flash')
@@ -22,7 +23,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     secret: "keyboard cat",
-    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    // store: new MongoStore({ mongooseConnection: mongoose.connection }),
     cookie: {
       maxAge: 365 * 24 * 60 * 60 * 1000,
       sameSite: true,
@@ -48,9 +49,10 @@ app.set('view engine','ejs')
 
 //Routes
 app.use('/',userRoute)
-app.use('/donardonate', donardonate)
+// app.use('/donardonate', donardonate)
 app.use('/searchdonar', searchdonars);
-app.use('/searchdonarpost', search_donar_post);
+// app.use('/searchdonarpost', search_donar_post);
+app.use('/plasma', plasma)
 app.use('/test',test)
 
 const port = process.env.PORT || 5000;

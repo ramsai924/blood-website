@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@900&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/public/style/home.css">
+    <style>
+        
+
+    </style>
+</head>
+
+<body>
+
+    <div style="position: relative;top: 50%;">
+        <div class="topnav" id="myTopnav" style="background-color: black;">
+            <div class="container">
+                <a href="/" class="active home-tag" id="home">Home</a>
+                <div id="alignment">
+                    <%  if(typeof userset != undefined){ %>
+                    <% if(userset === true){ %>
+
+                    <a href="/">About us</a>
+                    <a href="/">Contact us</a>
+                    <a href="/profile">Profile</a>
+                    <a href="/logout">Logout</a>
+
+                    <% }else{ %>
+                    <a href="/">Abouts us</a>
+                    <a href="/">Contact us</a>
+                    <a href="/" >Sign
+                        in</a>
+                    <%  } %>
+                    <%  } %>
+                </div>
+                <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                   
+                    <i style="font-size: 30px;color: white;" class="fa fa-bars" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="res-navs">
+
+    </div>
+
+
+    <% if(message.length > 0){ %>
+    <div class="alert alert-success alert-dismissible" style="position: fixed;background-color: lightgreen;"
+        role="alert" id="alerts">
+        <strong><%= message %></strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true" style="text-decoration: none;">&times;</span>
+        </button>
+    </div>
+
+    <% } %>
+
+
+
+    <div class="container">
+        <div style="margin-top: 15px;" class="text-center">
+            <button id="btnss" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="height: 60px;">Donar register</button>
+            <button id="btnss" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal1" style="height: 60px;">Patient register</button>
+        </div>
+
+        <!--donar register -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Donar Details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                    <%  if(typeof userset != undefined){ %>
+                    <% if(userset === true){ %>
+                    <form action="/plasma/plasmadonate" method="POST">
+                        <div class="form-group">
+                            <label for="patientName">patientname : <span style="color: red;">*</span> </label>
+                            <input type="text" class="form-control" id="patientName" placeholder="Enter patientName" name="patientName"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label for="recoveryDate">Recovered Date : <span style="color: red;">*</span> </label>
+                            <input type="date" class="form-control" id="recoveryDate" placeholder="Enter recoveryDate" name="recoveryDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bloodGroup">Blood group : <span style="color: red;">*</span></label>
+                            <select id="bloodGroup" name="bloodGroup" class="form-control">
+                                <option value="">select</option>
+                                <option value="O-">O-</option>
+                                <option value="O+">O+ </option>
+                                <option value="A-">A-</option>
+                                <option value="A+">A+</option>
+                                <option value="B-">B-</option>
+                                <option value="B+">B+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="AB+">AB+</option>
+                            </select>
+                        </div>
+                      
+
+                        <div class="form-group">
+                            <label for="PhoneNumber">PhoneNumber: <span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="PhoneNumber" placeholder="Enter PhoneNumber" name="phoneNumber">
+                        </div>
+                        <% if(userdata){ %>
+                        
+                        <input type="hidden" class="form-control" name="userid" value="<%= userdata._id %>">
+                        
+                        <% } %>
+                        <div class="form-group">
+                            <label for="village">village: <span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="village" placeholder="Enter village" name="village">
+                        </div>
+                        <div class="form-group">
+                            <label for="zipcode">Zipcode: <span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="zipcode" placeholder="Enter zipcode" name="zipcode">
+                        </div>
+                        <div class="form-group">
+                            <label for="city">city: <span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="city" placeholder="Enter city" name="city">
+                        </div>
+                        <div class="form-group">
+                            <label for="district">District: <span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="district" placeholder="Enter district" name="district">
+                        </div>
+                        <div class="form-group">
+                            <label for="state">State: <span style="color: red;">*</span></label>
+                            <input type="text" class="form-control" id="state" placeholder="Enter state" name="state">
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                    <%  } else { %>
+                        <p>Please login and try again</p>
+                    <% } %>
+                    <%  } %>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- patient -->
+            <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Patient Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                <%  if(typeof userset != undefined){ %>
+                <% if(userset === true){ %>
+                <form action="/plasma/plasmasearch" method="POST">
+                    <div class="form-group">
+                        <label for="patientName">patientname: <span style="color: red;">*</span> </label>
+                        <input type="text" class="form-control" id="patientName" placeholder="Enter patientName" name="patientName"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="donationdate">Date of donation: <span style="color: red;">*</span> </label>
+                        <input type="date" class="form-control" id="donationdate" placeholder="Enter date" name="donationdate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bloodGroup">Blood group : <span style="color: red;">*</span></label>
+                        <select id="bloodGroup" name="bloodGroup" class="form-control">
+                            <option value="">select</option>
+                            <option value="O-">O-</option>
+                            <option value="O+">O+ </option>
+                            <option value="A-">A-</option>
+                            <option value="A+">A+</option>
+                            <option value="B-">B-</option>
+                            <option value="B+">B+</option>
+                            <option value="AB-">AB-</option>
+                            <option value="AB+">AB+</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Age: <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" id="age" placeholder="Enter age" name="age">
+                    </div>
+                    <div class="form-group">
+                        <label for="hospitalName">hospitalName: <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" id="hospitalName" placeholder="Enter hospitalName" name="hospitalName">
+                    </div>
+                    <div class="form-group">
+                        <label for="PhoneNumber">PhoneNumber: <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" id="PhoneNumber" placeholder="Enter PhoneNumber" name="phoneNumber">
+                    </div>
+                    <% if(userdata){ %>
+                
+                    <input type="hidden" class="form-control" name="userid" value="<%= userdata._id %>">
+                
+                    <% } %>
+                
+                    <div class="form-group">
+                        <label for="zipcode">Zipcode: <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" id="zipcode" placeholder="Enter zipcode" name="zipcode">
+                    </div>
+                    <div class="form-group">
+                        <label for="city">city: <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" id="city" placeholder="Enter city" name="city">
+                    </div>
+                    <div class="form-group">
+                        <label for="district">District: <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" id="district" placeholder="Enter district" name="district">
+                    </div>
+                    <div class="form-group">
+                        <label for="state">State: <span style="color: red;">*</span></label>
+                        <input type="text" class="form-control" id="state" placeholder="Enter state" name="state">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                <% } else{ %>
+                    <p>Please register and try</p>
+                <% } %>
+                <%  } %>
+                </div>
+                </div>
+            </div>
+            </div>
+    </div><br><br>
+
+
+    <div class="container">
+        <div>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2">search Donar</button> <hr>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+
+                        <div class="modal-header" style="display: flex;justify-content: space-around;">
+                        
+                            <div style="padding: 5px 10px 10px 20px;background-color: white;width: 100%;margin: 2px;text-align: center;cursor: pointer;"
+                                id="upact">
+                                <h6 class="modal-title" id="Yourlocation">Your loaction</h6>
+                            </div>
+                            <div style="padding: 5px 10px 10px 20px;background-color: grey;width: 100%;margin: 2px;text-align: center;cursor: pointer;"
+                                id="inact">
+                                <h6 class="modal-title" id="customlocation">Custom location</h6>
+                            </div>
+                       
+                        
+                        </div>
+
+                    
+                        <div class="modal-body">
+
+                            <div id="yourloc">
+                                   <form action="/plasma" method="GET">
+                                    <input type="hidden" name="longitute" id="longitudes" value="">
+                                    <input type="hidden" name="latitude" id="latitudes" value="">
+                                
+                                    <div style="margin: 10px;">
+                                   
+
+                                    <select id="bloodgroup" name="bloodgroup" style="padding: 2px;">
+                                        <option value="null" id="selected">select Blood group</option>
+                                        <option value="O-">O-</option>
+                                        <option value="O+">O+ </option>
+                                        <option value="A-">A-</option>
+                                        <option value="A+">A+</option>
+                                        <option value="B-">B-</option>
+                                        <option value="B+">B+</option>
+                                        <option value="AB-">AB-</option>
+                                        <option value="AB+">AB+</option>
+                                    </select>
+                                    </div>
+                                    <div style="margin: 10px;">
+                                        <input type="text" name="distance" id="distance" value="" placeholder="Enter Km's">
+                                    </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Search</button>
+                                </div>
+                                </form>
+                            </div>
+
+                            <div style="display: none;" id="custloc">
+                                <form action="/plasma" method="GET">
+                                    
+                                    <div style="margin: 10px;">
+                                   
+
+                                    <select id="bloodgroup" name="bloodgroup" style="padding: 2px;">
+                                        <option value="null" id="selected">select Blood group</option>
+                                        <option value="O-">O-</option>
+                                        <option value="O+">O+ </option>
+                                        <option value="A-">A-</option>
+                                        <option value="A+">A+</option>
+                                        <option value="B-">B-</option>
+                                        <option value="B+">B+</option>
+                                        <option value="AB-">AB-</option>
+                                        <option value="AB+">AB+</option>
+                                    </select>
+                                    </div>
+                                    <div style="margin: 10px;">
+                                        <input type="text" name="distance" id="distance" value="" placeholder="Enter Km's">
+                                    </div>
+                                   
+                                   <div style="margin: 10px;">
+                                        <input type="text" name="zipcode" id="zipcode" value="" placeholder="Enter zipcode & city">
+                                   </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Search</button>
+                                </div>
+                                </form>
+                                
+                            </div>
+
+
+                        </div>
+
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+
+        <% if(typeof donars != undefined){ %>
+            <% if(donars.length > 0){ %>
+               <%  donars.forEach((donar) => { %>
+                    <p><%= donar.bloodGroup %></p>
+                <% }) %>
+        <% } else { %>
+             <p style="text-align: center;margin-top: 20%;">No Donars found <a href="/plasma">Go Back..!!</a></p>
+        <% } %>
+        <% } %>
+        
+    </div>
+
+<script src="/public/scripts/plasma.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>
+    <script>
+
+        function myFunction() {
+            var x = document.getElementById("myTopnav");
+            if (x.className === "topnav") {
+                x.className += " responsive";
+
+             
+                document.querySelector(".fa-times").style.display = "block"
+
+            } else {
+                x.className = "topnav";
+             
+                document.querySelector(".fa-times").style.display = "none"
+            }
+        }
+
+        //top popup event
+        window.addEventListener('scroll', function () {
+            if (window.pageYOffset > 30) {
+                document.querySelector("#topalerts").style.top = "0px"
+               
+            } else if (window.pageYOffset < 500) { document.getElementById("topalerts").style.top = "-15%" }
+        }); function
+            closealert() { document.getElementById("topalerts").style.top = "-15%" } setTimeout(() => {
+                document.getElementById("alerts").style.display = "none"
+            }, 3000);
+
+        //time out for warining bootsrap alert
+        setTimeout(() => {
+            document.getElementById("alerts").style.display = "none"
+        }, 3000);
+        setTimeout(() => {
+            document.getElementById("alerts1").style.display = "none"
+        }, 3000);
+
+        //query selector
+        const { longitute, latitude, distance, bloodgroup } = Qs.parse(location.search, { ignoreQueryPrefix: true });
+       
+    </script>
+  
+</body>
+
+</html>

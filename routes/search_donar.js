@@ -1,7 +1,9 @@
 const express = require("express");
 var bodyParser = require("body-parser");
 const Donar_donate = require("../models/Donar_donate");
+const search_donar_post = require("../models/serach_donar_post");
 const User = require("../models/userModel");
+const geocoder = require("../utils/geocoder");
 const flash = require('connect-flash')
 const app = express();
 
@@ -37,7 +39,27 @@ app.get("/", urlencodedParser, async (req, res) => {
           fdonars.push(donar);
         }
       });
-    } else if (req.query.bloodgroup){
+    } else if (req.query.zipcode && req.query.bloodgroup && req.query.distance) {
+      const Getlocation = await geocoder.geocode(req.query.zipcode);
+
+      const longitute = Getlocation[0].longitude;
+      const latitude = Getlocation[0].latitude;
+
+      const radiuss = req.query.distance / 6378;
+      const donar = await Donar_donate.find({
+        Donatstatus: "active",
+        location: {
+          $geoWithin: { $centerSphere: [[longitute, latitude], radiuss] },
+        }
+      }).populate("userid");
+
+      donar.forEach((donar) => {
+        if (donar.Bloodgroup === req.query.bloodgroup) {
+          fdonars.push(donar);
+        }
+      });
+
+    }else if (req.query.bloodgroup){
       const donar = await Donar_donate.find({ Bloodgroup: req.query.bloodgroup, Donatstatus: "active" }).populate("userid");
       donar.forEach((donar) => {
         if (donar.Bloodgroup === req.query.bloodgroup) {
@@ -58,6 +80,71 @@ app.get("/", urlencodedParser, async (req, res) => {
   } catch (error) {
     res.status(500).json({ err: error });
     console.log(error)
+  }
+});
+
+
+
+// async function checkuser(req, res, next) {
+//   const user = await User.findById({ _id: req.session.userid });
+//   console.log(user);
+//   if (user.usertype === "search") {
+//     next()
+//   } else {
+//     req.flash('message', 'You need to register as a search')
+//     res.redirect("/searchdonar");
+//   }
+// }
+
+//post patient details
+app.post("/searchdonarpost", urlencodedParser, async (req, res) => {
+  try {
+    console.log("serach donar page patient post")
+    const user = await User.findById({ _id: req.session.userid });
+    
+    if (user.usertype === "search") {
+      const post = await search_donar_post.create(req.body);
+      req.flash("message", "Details posted sucess");
+      res.redirect("/searchdonar");
+    } else {
+      req.flash('message', 'You need to register as a search')
+      res.redirect("/searchdonar");
+    }
+    
+  } catch (error) {
+    console.log(error)
+    // res.status(500).json({ error })
+  }
+});
+
+//post donar details
+
+app.post("/donardonate", urlencodedParser, async (req, res) => {
+  try {
+    console.log("serach donar page donar donate")
+    if (req.body.usertype === "donar") {
+      const check = await Donar_donate.find({ userid: req.body.userid })
+
+      if (check.length != 0) {
+        req.flash('message', 'you already updated donar details')
+        res.redirect("/searchdonar")
+        return
+      } else {
+        Donar_donate.create(req.body, (err, data) => {
+          if (err) throw err;
+          req.flash('message', 'Details updated sucessfully')
+          res.redirect("/searchdonar")
+          return
+        });
+      }
+    } else {
+      req.flash('message', 'you are not registered as a donar')
+      res.redirect("/searchdonar")
+      return
+    }
+
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 
@@ -97,5 +184,10 @@ app.post("/del",urlencodedParser,async(req,res) => {
   }
 })
 
+
+// //404 page
+app.get('*', function (req, res) {
+  res.status(404).render('404');
+});
 
 module.exports = app;
