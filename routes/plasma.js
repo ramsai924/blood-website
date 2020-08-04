@@ -65,15 +65,17 @@ app.get("/",async (req,res) => {
 
             donars = plasma_find
         } else if (req.query.bloodgroup){
-            const plasma_findBlood = await Plasma_post.find({ Donatstatus: "active", bloodGroup: req.query.bloodgroup})
+            const plasma_findBlood = await Plasma_post.find({ Donatstatus: "active", bloodGroup: req.query.bloodgroup }).populate("userid");
             donars = plasma_findBlood
         }
         else{
-            const plasma_find = await Plasma_post.find({ Donatstatus: "active" })
+            const plasma_find = await Plasma_post.find({ Donatstatus: "active" }).populate("userid");
             donars = plasma_find
         }
         
-        // console.log(donars)
+        // console.log(donars[0])
+
+        // res.json({ donars })
         res.render("plasma", { userset, userdata, donars, message: req.flash('message') })
     } catch (error) {
         console.log(error)
@@ -84,7 +86,7 @@ app.post("/plasmasearch",auth,urlencodedParser,async (req,res) => {
 
     try {
         const user = await User.findById({ _id : req.session.userid })
-        console.log(user)
+        // console.log(user)
         if (user.usertype == "search"){
             const plasma_search = await Plasma_search_post.create(req.body)
             req.flash("message", "user data post success");
@@ -105,7 +107,7 @@ app.post("/plasmadonate", auth, urlencodedParser, async (req, res) => {
 
         const plasma_exits_user = await Plasma_post.find({ userid : req.session.userid })
 
-        console.log(plasma_exits_user)
+        // console.log(plasma_exits_user)
 
         if(plasma_exits_user.length > 0){
             req.flash("message", "You have already updated details");
@@ -123,6 +125,39 @@ app.post("/plasmadonate", auth, urlencodedParser, async (req, res) => {
         
     } catch (error) {
         console.log(error)
+    }
+})
+
+
+//saving user data
+app.post("/save", urlencodedParser, async (req, res) => {
+    try {
+        console.log(req.body)
+      
+        const preuserpsave = await User.findById({ _id: req.session.userid })
+        const Plasmapost = await Plasma_post.find({ _id: req.body.save })
+        const userpview = await User.findById({ _id: Plasmapost[0].userid })
+
+        var arr = preuserpsave.activity.plasmasaved.concat(userpview.activity.viewed)
+
+        var stringarr = []
+        arr.forEach((e) => {
+            stringarr.push(e.toString())
+        });
+
+        if (stringarr.includes(req.body.save, req.body.view) === false){
+        const Plasmapost = await Plasma_post.find({ _id: req.body.save })
+        const userview = await User.findByIdAndUpdate({ _id: Plasmapost[0].userid }, { $push: { "activity.viewed": req.body.view } }) //saved user data
+        const user = await User.findByIdAndUpdate({ _id: req.session.userid }, { $push: { "activity.plasmasaved": req.body.save } })// saved table data
+        req.flash("message", "user saved");
+        res.redirect("/plasma");
+        } else{
+            req.flash("message", "user alredy saved");
+            res.redirect("/plasma");
+        }
+
+    } catch (error) {
+        res.status(500).json({ error })
     }
 })
 

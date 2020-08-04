@@ -2,6 +2,7 @@ const mongoose = require("mongoose")
 const geocoder = require("../utils/geocoder");
 const Schema = mongoose.Schema;
 
+mongoose.set('useCreateIndex', true);
 const search_donar_schema = Schema({
     patientname : {
         type : String,
@@ -56,6 +57,7 @@ const search_donar_schema = Schema({
     },
 });
 
+search_donar_schema.index({ "location": 1, "userid": -1, "Bloodgroup" : 1 }, { unique: true });
 //Geo-location
 search_donar_schema.pre('save', async function (next) {
     const address = `${this.city},${this.district},${this.zipcode},${this.state}`;

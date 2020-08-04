@@ -9,63 +9,178 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/public/style/home.css">
+    <style>
+        #banner{
+            background-color: blue;
+            float : right;
+            /* display: inline-block; */
+            padding: 2px;
+        }
+        .active {
+            border-bottom: 3px solid red;   
+            }
+    </style>
     <title>Document</title>
 </head>
 
 <body>
 
 
-<div>
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+<div style="position: relative;top: 50%;">
+    <div class="topnav" id="myTopnav" style="background-color: black;">
         <div class="container">
-            <!-- Brand/logo -->
-            <a class="navbar-brand" href="/">Logo</a>
+            <a href="/" class=" home-tag" id="home">Home</a>
+            <div id="alignment">
+                
+                <% if(userset){ %>
 
-            <!-- Links -->
-            <ul class="navbar-nav" id="navbar-res">
-                <!-- <li class="nav-item" style="margin-left:5px">
-                            <a class="nav-link" href="#" >Profile</a>
-                        </li> -->
-                <%  if(userset){ %>
-                <li class="nav-item" style="margin-left:5px">
-                    <a class="btn btn-primary" href="/profile" style="background: transparent;">profile</a>
-                    <a class="btn btn-primary" href="/logout" style="background: transparent;">Logout</a>
-                </li>
+                <a href="/searchdonar">Regular</a>
+                <a href="/plasma">Plasma</a>
+                <a href="/profile">Profile</a>
+                <a href="/logout">Logout</a>
+
                 <% }else{ %>
-                <li class="nav-item">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"
-                        style="background: transparent;">
-                        Sign in
-                    </button>
-                </li>
+                <a href="/">Abouts us</a>
+                <a href="/">Contact us</a>
+                <a href="/">Sign
+                    in</a>
                 <%  } %>
+            
+            </div>
+            <a href="javascript:void(0);" class="icon" onclick="myFunction()">
 
-            </ul>
+                <i style="font-size: 30px;color: white;" class="fa fa-bars" aria-hidden="true"></i>
+            </a>
         </div>
-    </nav>
+    </div>
 </div>
 
-<% if(userset){ %>
-    <div class="container">
-       
-          <div style="background: grey;">
-                <div>
-                    <p>Name : <%= userset.name %></p>
-                    <p>Email : <%= userset.email %></p>
-                    <p>Phone Number : <%= userset.phoneNumber %></p>
-                    <p>User Type : <%= userset.usertype %></p>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#model<%= userset._id %>">
+<div class="res-navs">
+
+</div>
+
+
+<% if(message.length > 0){ %>
+<div class="alert alert-success alert-dismissible" style="position: fixed;background-color: white;z-index: 100;
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border: none;" id="alerts">
+    <strong style="color: black;"><%= message %></strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true" style="text-decoration: none;color: black;">&times;</span>
+    </button>
+</div>
+
+
+<% } %>
+
+
+<div class="container">
+    <div class="row" style="margin-top: 40px;">
+        <div class="col-md-4">
+            <% if(userset){ %>
+           
+            
+                <div class="container" style="margin-top: 33px;">
+                    <h6>User Details</h6> <hr>
+                    <div>
+                        <p>Name : <%= userset.name %></p>
+                        <p>Email : <%= userset.email %></p>
+                        <p>Phone Number : <%= userset.phoneNumber %></p>
+                        <p>User Type : <%= userset.usertype %></p>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#model<%= userset._id %>">
+                            Edit
+                        </button>
+            
+                        <!-- popup model for post edit -->
+                        <div class="modal fade" id="model<%= userset._id %>" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+            
+            
+                                    <div class="modal-body">
+                                        <form action="/editprofile/<%= userset._id %>" method="POST">
+            
+                                            <div class="form-group">
+                                                <label for="name">Name: <span style="color: red;">*</span></label>
+                                                <input type="text" class="form-control" value="<%= userset.name %>" name="name">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="email">Email: <span style="color: red;">*</span></label>
+                                                <input type="text" class="form-control" value="<%= userset.email %>" name="email">
+                                            </div>
+            
+                                            <div class="form-group">
+                                                <label for="phonenumber">Phone Number: <span style="color: red;">*</span></label>
+                                                <input type="text" class="form-control" value="<%= userset.phoneNumber %>"
+                                                    name="phoneNumber">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="usertype">User Type : <span style="color: red;">* </span></label>
+                                                <select id="usertype" name="usertype" class="form-control">
+                                                    <option value="<%= userset.usertype %>"><%= userset.usertype %></option>
+                                                    <option value="search">Search</option>
+                                                    <option value="donar">Donar</option>   
+                                                </select>
+                                            </div>
+                                    </div>
+            
+            
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+           
+            <% } %>
+
+        </div>
+
+        <!-- right side -->
+        <div class="col-md-8">
+            <div style="display: flex;">
+                <h6 style="margin: 10px;cursor: pointer;padding: 5px;" class="active" id="activity">Activity</h6>
+                <h6 style="margin: 10px;cursor: pointer;padding: 5px;" class="" id="save">Saved users</h6>
+                <h6 style="margin: 10px;cursor: pointer;padding: 5px;" class="" id="view">Views</h6>
+            </div>
+            
+            <hr>
+            <div id="useractivity" style="display: block;">
+            <% if(userData.length !=0 || search.length != 0 || plasmapost.length != 0 || plasmasearch.length != 0){ %>
+            
+            <!-- regular donar post -->
+          
+                <% if(userData){ %>
+                <% userData.forEach((data) => { %>
+                <div style="background-color: grey;margin: 5px;padding: 10px;">
+                    <div id="banner">Your Donar Details</div>
+                    <p>Blood Group : <%= data.Bloodgroup %></p>
+                    <p>Status : <%= data.Donatstatus %></p>
+                    <p>Address : <%= data.village %> , <%= data.district %> , <%= data.state %> , <%= data.zipcode %></p>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#model<%= data._id %>">
                         Edit
                     </button>
-
-                    <!-- popup model for post edit -->
-                    <div class="modal fade" id="model<%= userset._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    
+                    <!-- popup model for  present user donar details -->
+                    <div class="modal fade" id="model<%= data._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                         aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Your Donar Details</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -73,30 +188,63 @@
                     
                     
                                 <div class="modal-body">
-                                    <form action="/editprofile/<%= userset._id %>" method="POST">
-                                       
-                                        <div class="form-group">
-                                            <label for="name">Name: <span style="color: red;">*</span></label>
-                                            <input type="text" class="form-control" value="<%= userset.name %>" name="name">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email">Email: <span style="color: red;">*</span></label>
-                                            <input type="text" class="form-control" value="<%= userset.email %>" name="email">
-                                        </div>
+                                    <form action="/presentdonaredit/<%= data._id %>" method="POST">
                     
+                                        
                                         <div class="form-group">
-                                            <label for="phonenumber">Phone Number: <span style="color: red;">*</span></label>
-                                            <input type="text" class="form-control" value="<%= userset.phoneNumber %>" name="phoneNumber">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="usertype">User Type : <span style="color: red;">* </span></label>
-                                            <select id="usertype" name="usertype" class="form-control">
-                                                <option value="<%= userset.usertype %>"><%= userset.usertype %></option>
-                                                <option value="search">Search</option>
-                                                <option value="donar">Donar</option>
-                                            
+                                            <label for="Donatstatus">status : <span style="color: red;">* </span></label>
+                                            <select id="Donatstatus" name="Donatstatus" class="form-control">
+                                                <option value="<%= data.Donatstatus %>">selected : <%= data.Donatstatus %></option>
+                                                <option value="active">Active</option>
+                                                <option value="inactive">Inactive</option>
+                    
                                             </select>
                                         </div>
+                                        <div class="form-group">
+                                            <label for="Bloodgroup">Blood group : <span style="color: red;">* </span></label>
+                                            <select id="Bloodgroup" name="Bloodgroup" class="form-control">
+                                                <option value="<%= data.Bloodgroup %>">selected : <%= data.Bloodgroup %></option>
+                                                <option value="O-">O-</option>
+                                                <option value="O+">O+ </option>
+                                                <option value="A-">A-</option>
+                                                <option value="A+">A+</option>
+                                                <option value="B-">B-</option>
+                                                <option value="B+">B+</option>
+                                                <option value="AB-">AB-</option>
+                                                <option value="AB+">AB+</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="hno">hno: <span style="color: red;">*</span></label>
+                                            <input type="text" class="form-control" value="<%= data.hno %>"
+                                                placeholder="Enter hno" name="hno">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="village">village: <span style="color: red;">*</span></label>
+                                            <input type="text" class="form-control" value="<%= data.village %>" placeholder="Enter village"
+                                                name="village">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="zipcode">Zipcode: <span style="color: red;">*</span></label>
+                                            <input type="text" class="form-control" value="<%= data.zipcode %>" placeholder="Enter zipcode"
+                                                name="zipcode">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="mandal">mandal: <span style="color: red;">*</span></label>
+                                            <input type="text" class="form-control" value="<%= data.mandal %>" placeholder="Enter mandal"
+                                                name="mandal">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="district">District: <span style="color: red;">*</span></label>
+                                            <input type="text" class="form-control" value="<%= data.district %>"
+                                                placeholder="Enter district" name="district">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="state">State: <span style="color: red;">*</span></label>
+                                            <input type="text" class="form-control" value="<%= data.state %>" placeholder="Enter state"
+                                                name="state">
+                                        </div>
+                    
                                 </div>
                     
                     
@@ -108,147 +256,454 @@
                             </div>
                         </div>
                     </div>
+                    
                 </div>
-          </div>
-      
-    </div>
-<% } %>
+                <% }) %>
+                <% } %>
+            
 
-<% if(message.length > 0){ %>
-<div class="alert alert-success alert-dismissible" style="position: fixed;" role="alert" id="alerts">
-    <strong><%= message %></strong>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true" style="text-decoration: none;">&times;</span>
-    </button>
-</div>
-
-<% } %>
-
-
-   <% if(typeof userData === "object" && userData.length !=0 || typeof search === "object" && search.length != 0 ){ %>
-        <div class="container">
-           <% if(userData){ %>
-            <% userData.forEach((data) => { %>
-            <div>
-                <p><%= data.Bloodgroup %></p>
-                <p><%= data.Donatstatus %></p>
-            </div>
-            <% }) %>
-            <% } %>
-        </div>
-        
-        <div class="container">
-            <% if(search.length != 0){ %>
-            <h2>Your Posts</h2>
-            <% search.forEach((data) => { %>
-            <div style="background: grey;margin-top: 10px;padding: 10px;">
-                <p>Blood Group : <%= data.Bloodgroup %></p>
-                <p>Donar status : <%= data.Donatstatus %></p>
-                <p>Patient Name : <%= data.patientname %></p>
-                <p>Donataion Date : <%= data.date %></p>
-                <p>Hospital Name : <%= data.hospitalName %></p>
-                <p>Address : <%= data.city %> , <%= data.district %> , <%= data.state %> , <%= data.zipcode %></p>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#model<%= data._id %>">
-                    Edit
-                </button>
-                <a href="/deletepost/<%= data._id %>">Delete</a>
-
-                <!-- popup model for post edit -->
-                <div class="modal fade" id="model<%= data._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
+            <!-- plasma donar post -->
+            
+           
+                <% if(plasmapost.length > 0){ %>
+                <%  plasmapost.forEach((ppost) => { %>
+                <div style="background-color: grey;margin: 5px;padding: 10px;">
+                    <div id="banner">plasma Donar Details</div>
+                    <p>Blood Group : <%= ppost.bloodGroup %></p>
+                    <p>Status : <%= ppost.Donatstatus %></p>
+                    
+                    <p>Recovered Date : <%= ppost.recoveryDate %></p>
+                    <p>Adress : <%= ppost.zipcode %></p>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#model<%= ppost._id %>">
+                        Edit
+                    </button>
+                    <!-- <a href="/deleteposts/<%= ppost._id %>">Delete</a> -->
 
 
-                            <div class="modal-body">
-                                <form action="/editpost/<%= data._id %>" method="POST">
-                                    <div class="form-group">
-                                        <label for="patientname">patientname: <span style="color: red;">*</span> </label>
-                                        <input type="text" class="form-control" id="patientname" placeholder="Enter patientname" name="patientname"
-                                            value="<%= data.patientname %>" required>
+                        <!-- popup model for  plasma donar post -->
+                        <div class="modal fade" id="model<%= ppost._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Plasma Donar details</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="date">Date of donation: <span style="color: red;">*</span> </label>
-                                        <input type="date" class="form-control" id="date" placeholder="Enter date" name="date" value="<%= data.date %>" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="Donatstatus">status : <span style="color: red;">* </span></label>
-                                        <select id="Donatstatus" name="Donatstatus" class="form-control">
-                                            <option value="<%= data.Donatstatus %>"><%= data.Donatstatus %></option>
-                                            <option value="active">Active</option>
-                                            <option value="inactive">Inactive</option>
+                        
+                        
+                                    <div class="modal-body">
+                                        <form action="/plasmadonateedit/<%= ppost._id %>" method="POST">
                                           
-                                        </select>
+                                            <div class="form-group">
+                                                <label for="date">Date of donation: <span style="color: red;">*</span> </label>
+                                                <input type="date" class="form-control" id="date" placeholder="Enter date" name="recoveryDate" value="<%= ppost.recoveryDate %>"
+                                                    required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Donatstatus">status : <span style="color: red;">* </span></label>
+                                                <select id="Donatstatus" name="Donatstatus" class="form-control">
+                                                    <option value="<%= ppost.Donatstatus %>">selected : <%= ppost.Donatstatus %></option>
+                                                    <option value="active">Active</option>
+                                                    <option value="inactive">Inactive</option>
+                                            
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Bloodgroup">Blood group : <span style="color: red;">* </span></label>
+                                                <select id="Bloodgroup" name="bloodGroup" class="form-control">
+                                                    <option value="<%= ppost.bloodGroup %>">selected : <%= ppost.bloodGroup %></option>
+                                                    <option value="O-">O-</option>
+                                                    <option value="O+">O+ </option>
+                                                    <option value="A-">A-</option>
+                                                    <option value="A+">A+</option>
+                                                    <option value="B-">B-</option>
+                                                    <option value="B+">B+</option>
+                                                    <option value="AB-">AB-</option>
+                                                    <option value="AB+">AB+</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="phoneNumber">phoneNumber: <span style="color: red;">*</span></label>
+                                                <input type="text" class="form-control" value="<%= ppost.phoneNumber %>" placeholder="Enter phoneNumber"
+                                                    name="phoneNumber">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="village">village: <span style="color: red;">*</span></label>
+                                                <input type="text" class="form-control" value="<%= ppost.village %>" placeholder="Enter village"
+                                                    name="village">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="zipcode">Zipcode: <span style="color: red;">*</span></label>
+                                                <input type="text" class="form-control" value="<%= ppost.zipcode %>" placeholder="Enter zipcode" name="zipcode">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="city">city: <span style="color: red;">*</span></label>
+                                                <input type="text" class="form-control" value="<%= ppost.city %>" placeholder="Enter city" name="city">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="district">District: <span style="color: red;">*</span></label>
+                                                <input type="text" class="form-control" value="<%= ppost.district %>" placeholder="Enter district" name="district">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="state">State: <span style="color: red;">*</span></label>
+                                                <input type="text" class="form-control" value="<%= ppost.state %>" placeholder="Enter state" name="state">
+                                            </div>
+                                           
                                     </div>
-                                    <div class="form-group">
-                                        <label for="Bloodgroup">Blood group :  <span style="color: red;">*  </span></label>
-                                        <select id="Bloodgroup" name="Bloodgroup" class="form-control" >
-                                            <option value="<%= data.Bloodgroup %>"><%= data.Bloodgroup %></option>
-                                            <option value="O-">O-</option>
-                                            <option value="O+">O+ </option>
-                                            <option value="A-">A-</option>
-                                            <option value="A+">A+</option>
-                                            <option value="B-">B-</option>
-                                            <option value="B+">B+</option>
-                                            <option value="AB-">AB-</option>
-                                            <option value="AB+">AB+</option>
-                                        </select>
+                        
+                        
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="hospitalName">hospitalName: <span style="color: red;">*</span></label>
-                                        <input type="text" class="form-control" value="<%= data.hospitalName %>" placeholder="Enter hospitalName" name="hospitalName">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="PhoneNumber">PhoneNumber: <span style="color: red;">*</span></label>
-                                        <input type="text" class="form-control" value="<%= data.PhoneNumber %>" placeholder="Enter PhoneNumber" name="PhoneNumber">
-                                    </div>
-                                
-                                    <div class="form-group">
-                                        <label for="zipcode">Zipcode: <span style="color: red;">*</span></label>
-                                        <input type="text" class="form-control" value="<%= data.zipcode %>" placeholder="Enter zipcode" name="zipcode">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="city">city: <span style="color: red;">*</span></label>
-                                        <input type="text" class="form-control" value="<%= data.city %>" placeholder="Enter city" name="city">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="district">District: <span style="color: red;">*</span></label>
-                                        <input type="text" class="form-control" value="<%= data.district %>" placeholder="Enter district" name="district">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="state">State: <span style="color: red;">*</span></label>
-                                        <input type="text" class="form-control" value="<%= data.state %>" placeholder="Enter state" name="state">
-                                    </div>
+                                    </form>
+                                </div>
                             </div>
-
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                </div>
+                <%  }) %>
+                <%  } %>
+            
+            
+            <!-- regular search post -->
+            
+                <% if(search.length != 0){ %>
+            
+                <% search.forEach((data) => { %>
+                <div style="background: grey;margin:5px;padding: 10px;">
+                    <div id="banner">Patient Details</div>
+                    <p>Blood Group : <%= data.Bloodgroup %></p>
+                    <p>Donar status : <%= data.Donatstatus %></p>
+                    <p>Patient Name : <%= data.patientname %></p>
+                    <p>Donataion Date : <%= data.date %></p>
+                    <p>Hospital Name : <%= data.hospitalName %></p>
+                    <p>Address : <%= data.city %> , <%= data.district %> , <%= data.state %> , <%= data.zipcode %></p>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#model<%= data._id %>">
+                        Edit
+                    </button>
+                    <a href="/deletepost/<%= data._id %>">Delete</a>
+            
+                    <!-- popup model for post edit -->
+                    <div class="modal fade" id="model<%= data._id %>" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+            
+            
+                                <div class="modal-body">
+                                    <form action="/editpost/<%= data._id %>" method="POST">
+                                        <div class="form-group">
+                                            <label for="patientname">patientname: <span style="color: red;">*</span> </label>
+                                            <input type="text" class="form-control" id="patientname" placeholder="Enter patientname"
+                                                name="patientname" value="<%= data.patientname %>" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="date">Date of donation: <span style="color: red;">*</span> </label>
+                                            <input type="date" class="form-control" id="date" placeholder="Enter date" name="date"
+                                                value="<%= data.date %>" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Donatstatus">status : <span style="color: red;">* </span></label>
+                                            <select id="Donatstatus" name="Donatstatus" class="form-control">
+                                                <option value="<%= data.Donatstatus %>"><%= data.Donatstatus %></option>
+                                                <option value="active">Active</option>
+                                                <option value="inactive">Inactive</option>
+            
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Bloodgroup">Blood group : <span style="color: red;">* </span></label>
+                                            <select id="Bloodgroup" name="Bloodgroup" class="form-control">
+                                                <option value="<%= data.Bloodgroup %>"><%= data.Bloodgroup %></option>
+                                                <option value="O-">O-</option>
+                                                <option value="O+">O+ </option>
+                                                <option value="A-">A-</option>
+                                                <option value="A+">A+</option>
+                                                <option value="B-">B-</option>
+                                                <option value="B+">B+</option>
+                                                <option value="AB-">AB-</option>
+                                                <option value="AB+">AB+</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="hospitalName">hospitalName: <span style="color: red;">*</span></label>
+                                            <input type="text" class="form-control" value="<%= data.hospitalName %>"
+                                                placeholder="Enter hospitalName" name="hospitalName">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="PhoneNumber">PhoneNumber: <span style="color: red;">*</span></label>
+                                            <input type="text" class="form-control" value="<%= data.PhoneNumber %>"
+                                                placeholder="Enter PhoneNumber" name="PhoneNumber">
+                                        </div>
+            
+                                        <div class="form-group">
+                                            <label for="zipcode">Zipcode: <span style="color: red;">*</span></label>
+                                            <input type="text" class="form-control" value="<%= data.zipcode %>"
+                                                placeholder="Enter zipcode" name="zipcode">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="city">city: <span style="color: red;">*</span></label>
+                                            <input type="text" class="form-control" value="<%= data.city %>"
+                                                placeholder="Enter city" name="city">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="district">District: <span style="color: red;">*</span></label>
+                                            <input type="text" class="form-control" value="<%= data.district %>"
+                                                placeholder="Enter district" name="district">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="state">State: <span style="color: red;">*</span></label>
+                                            <input type="text" class="form-control" value="<%= data.state %>"
+                                                placeholder="Enter state" name="state">
+                                        </div>
+                                </div>
+            
+            
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                                </form>
                             </div>
-                            </form>
                         </div>
                     </div>
                 </div>
+                <% }) %>
+                <% } %>
+           
+
+                <!-- plasma search post -->
+                
+                <% if(plasmasearch.length != 0){ %>
+                
+                <% plasmasearch.forEach((data) => { %>
+                <div style="background: grey;margin:5px;padding: 10px;">
+                    <div id="banner">plasma Patient Details</div>
+                    <p>patientName : <%= data.patientName %></p>
+                    <p>bloodGroup : <%= data.bloodGroup %></p>
+                    <p>Donar status : <%= data.Donatstatus %></p>
+                    <p>Donation Date : <%= data.donationdate %></p>
+                    <p>Hospital Name : <%= data.hospitalName %></p>
+                    <p>Address : <%= data.city %> , <%= data.district %> , <%= data.state %> , <%= data.zipcode %></p>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#model<%= data._id %>">
+                        Edit
+                    </button>
+                    <a href="/plasmasearchdelete/<%= data._id %>">Delete</a>
+                
+                    <!-- popup model for plasma search post edit -->
+                    <div class="modal fade" id="model<%= data._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                
+                
+                                <div class="modal-body">
+                                    <form action="/plasmasearchedit/<%= data._id %>" method="POST">
+                                        <div class="form-group">
+                                            <label for="patientname">patientname: <span style="color: red;">*</span> </label>
+                                            <input type="text" class="form-control" id="patientname" placeholder="Enter patientname"
+                                                name="patientName" value="<%= data.patientName %>" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="date">Date of donation: <span style="color: red;">*</span> </label>
+                                            <input type="date" class="form-control" id="date" placeholder="Enter date" name="date"
+                                                value="<%= data.donationdate %>" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Donatstatus">status : <span style="color: red;">* </span></label>
+                                            <select id="Donatstatus" name="Donatstatus" class="form-control">
+                                                <option value="<%= data.Donatstatus %>"><%= data.Donatstatus %></option>
+                                                <option value="active">Active</option>
+                                                <option value="inactive">Inactive</option>
+                
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Bloodgroup">Blood group : <span style="color: red;">* </span></label>
+                                            <select id="Bloodgroup" name="bloodGroup" class="form-control">
+                                                <option value="<%= data.bloodGroup %>"><%= data.bloodGroup %></option>
+                                                <option value="O-">O-</option>
+                                                <option value="O+">O+ </option>
+                                                <option value="A-">A-</option>
+                                                <option value="A+">A+</option>
+                                                <option value="B-">B-</option>
+                                                <option value="B+">B+</option>
+                                                <option value="AB-">AB-</option>
+                                                <option value="AB+">AB+</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="age">Age : <span style="color: red;">*</span></label>
+                                            <input type="text" class="form-control" value="<%= data.age %>" placeholder="Enter age"
+                                                name="age">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="hospitalName">hospitalName: <span style="color: red;">*</span></label>
+                                            <input type="text" class="form-control" value="<%= data.hospitalName %>"
+                                                placeholder="Enter hospitalName" name="hospitalName">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="PhoneNumber">PhoneNumber: <span style="color: red;">*</span></label>
+                                            <input type="text" class="form-control" value="<%= data.phoneNumber %>"
+                                                placeholder="Enter PhoneNumber" name="phoneNumber">
+                                        </div>
+                
+                                        <div class="form-group">
+                                            <label for="zipcode">Zipcode: <span style="color: red;">*</span></label>
+                                            <input type="text" class="form-control" value="<%= data.zipcode %>"
+                                                placeholder="Enter zipcode" name="zipcode">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="city">city: <span style="color: red;">*</span></label>
+                                            <input type="text" class="form-control" value="<%= data.city %>" placeholder="Enter city"
+                                                name="city">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="district">District: <span style="color: red;">*</span></label>
+                                            <input type="text" class="form-control" value="<%= data.district %>"
+                                                placeholder="Enter district" name="district">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="state">State: <span style="color: red;">*</span></label>
+                                            <input type="text" class="form-control" value="<%= data.state %>" placeholder="Enter state"
+                                                name="state">
+                                        </div>
+                                </div>
+                
+                
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+                <% } %>
+            
+            
+            
+            <% }else{ %>
+            <div class="container">
+                <p>You have no activity</p>
             </div>
-            <% }) %>
             <% } %>
         </div>
-   <% }else{ %>
-        <div class="container">
-            <p>You have no activity</p>
+
+        <div id="saved" style="display: none;">
+            
+                <% if(userset.activity.saved.length > 0){ %>
+                    <% userset.activity.saved.forEach((data) => { %>
+                        <div style="background-color: grey;">
+                            <p><%= data.Bloodgroup %></p>
+                            <p><%= data.userid.name %></p>
+                            <p><%= data.userid.phoneNumber %></p>
+                        </div>
+                   <%  }) %>
+                <% }else{ %>
+                    <p>No users saved</p>
+                <% } %>
+            
         </div>
-   <% } %>
+
+        <div id="viewed" style="display: none;">
+            
+                <% if(userset.activity.viewed.length > 0){ %>
+                    <div style="background-color: red;height: 100px;">
+                    
+                    </div>
+                <% }else{ %>
+                <p>No views found</p>
+                <% } %>
+            
+        </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+ 
 </body>
 <script>
-    setTimeout(() => {
-        document.getElementById("alerts").style.display = "none"
-    }, 3000);
+
+    var activity = document.getElementById("activity")
+    var activitydiv = document.getElementById("useractivity")
+    var save = document.getElementById("save")
+    var savediv = document.getElementById("saved")
+    var view = document.getElementById("view")
+    var viewdiv = document.getElementById("viewed")
+
+    save.addEventListener("click",() => {
+        save.classList.add("active");
+        view.classList.remove("active")
+        activity.classList.remove("active")
+        savediv.style.display = "block"
+        activitydiv.style.display = "none"
+        viewdiv.style.display = "none"
+    })
+
+     view.addEventListener("click", () => {
+        view.classList.add("active");
+        save.classList.remove("active")
+        activity.classList.remove("active")
+
+        viewdiv.style.display = "block"
+        activitydiv.style.display = "none"
+        savediv.style.display = "none"
+    })
+
+    activity.addEventListener("click", () => {
+        activity.classList.add("active");
+        save.classList.remove("active")
+        view.classList.remove("active")
+        
+        activitydiv.style.display = "block"
+        savediv.style.display = "none"
+        viewdiv.style.display = "none"
+    })
+
+     function myFunction() {
+            var x = document.getElementById("myTopnav");
+            if (x.className === "topnav") {
+                x.className += " responsive";
+
+
+                document.querySelector(".fa-times").style.display = "block"
+
+            } else {
+                x.className = "topnav";
+
+                document.querySelector(".fa-times").style.display = "none"
+            }
+        }
+
+         //time out for warining bootsrap alert
+            setTimeout(() => {
+                document.getElementById("alerts").style.display = "none"
+            }, 3000);
+            setTimeout(() => {
+                document.getElementById("alerts1").style.display = "none"
+            }, 3000);
+ 
 </script>
 </html>

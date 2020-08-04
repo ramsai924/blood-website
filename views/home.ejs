@@ -45,13 +45,13 @@
 
     
     <% if(message.length > 0){ %>
-    <div class="alert alert-success alert-dismissible" style="position: fixed;background-color: lightgreen;" role="alert" id="alerts">
-        <strong><%= message %></strong> 
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true" style="text-decoration: none;">&times;</span>
-        </button>
-    </div>
-
+<div class="alert alert-success alert-dismissible" style="position: fixed;background-color: white;z-index: 100;
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border: none;transition: 1s;" id="alerts">
+    <strong style="color: black;"><%= message %></strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true" style="text-decoration: none;color: black;">&times;</span>
+    </button>
+</div>
     <% } %>
 
     
@@ -201,18 +201,7 @@
     <div class="registrations">
         <div class="container">
             <div class="row">
-                <!-- <div class="col-md-3" style="margin-top:6px;text-align: center;">
-                    <div id="cards">
-                    
-                    <div style="background-color: #00aeef;padding: 5px;">
-                        <img src="/public/images/donar.png" width="100" height="100" style="padding: 10px;margin-top: 20px;">
-                        <p class="card-title" style="font-weight: 700;">Register Donar</p> 
-                        
-                    </div>
-                    <p style="padding: 5px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam unde.</p>
-                    <a href="/donardonate" class="btn btn-primary">click here</a>
-                    </div>
-                </div> -->
+              
                 <div class="col-md-4" style="margin-top:6px;text-align: center;">
                     <div id="cards">
                     
@@ -251,6 +240,10 @@
             </div>
         </div>
     </div>
+
+    <div class="container">
+
+    </div>
     
     <script>
          function myFunction() {
@@ -280,7 +273,7 @@
                 }, 3000);
 
         setTimeout(() => {
-            document.getElementById("alerts").style.display = "none"
+            document.getElementById("alerts").style.left = "-500px"
         },3000);
         setTimeout(() => {
                 document.getElementById("alerts1").style.display = "none"

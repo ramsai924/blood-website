@@ -2,6 +2,7 @@ const mongoose =  require('mongoose')
 const bcrypt = require('bcryptjs')
 const Schema = mongoose.Schema;
 
+
 const userSchema =Schema({
   name: {
     type: String,
@@ -10,6 +11,7 @@ const userSchema =Schema({
   email: {
     type: String,
     required: [true, "Email could not be empty"],
+    index: true
   },
   phoneNumber: {
     type: String,
@@ -33,7 +35,11 @@ const userSchema =Schema({
   activity : {
         saved : {
           type: [Schema.Types.ObjectId],
-          ref: "Donar_donate",
+          ref: "donar_donate",
+        },
+        plasmasaved : {
+          type: [Schema.Types.ObjectId],
+          ref: "donar_donate",
         },
         viewed : {
           type: [Schema.Types.ObjectId],

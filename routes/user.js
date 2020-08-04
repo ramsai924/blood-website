@@ -4,6 +4,7 @@ const flash = require('connect-flash')
 const Donar_donate = require("../models/Donar_donate")
 const search_donar_post = require("../models/serach_donar_post")
 const Plasma_post = require("../models/plasma_post")
+const Plasma_search = require("../models/plasma_search_post")
 const User = require('../models/userModel')
 const app = express()
 
@@ -79,29 +80,44 @@ app.post('/register',urlencodedParser,async (req,res) => {
 //profile route
 app.get("/profile",auth,async (req,res) => {
     try {
-      var userset = await User.findById({ _id: req.session.userid })
-
+      var userset = await User.findById({ _id: req.session.userid }).populate([
+        { path: 'activity.saved', model: 'donar_donate', populate: { path: 'userid',model: 'user'} }, 
+        { path: 'activity.viewed', model: 'user', populate: { path: 'userid', model: 'user' } },
+        { path: 'activity.plasmasaved', model: 'plasma_post', populate: { path: 'userid', model: 'user' } }
+      ])
+     
       var userData;
+      var plasmapost;
+      var plasmasearch;
       var search;
 
-      // if (userset.usertype == "donar") {
-        const donar = await Donar_donate.find({ userid: req.session.userid })
-        userData = donar
-      // }
+      
+      const donar = await Donar_donate.find({ userid: req.session.userid })
+      userData = donar
+      
 
       const plasma_posts = await Plasma_post.find({ userid: req.session.userid })
+      plasmapost = plasma_posts
 
-      // if (userset.usertype == "search") {
-        const searched = await search_donar_post.find({ userid: req.session.userid })
-        search = searched;
-      // }
+      const plasma_search = await Plasma_search.find({ userid: req.session.userid })
+      plasmasearch = plasma_search
+
       
-      res.render("profile", { userset, userData, search , message : req.flash('message') })
+      const searched = await search_donar_post.find({ userid: req.session.userid })
+      search = searched;
+      ////////////////////////
+
+    
+      console.log(userset.activity)
+
+
+      //////////////////////
+      res.render("profile", { plasmapost, plasmasearch, userset, userData, search , message : req.flash('message') })
     
     } catch (error) {
       // res.status(500).json({ success: false, error: error.message });
       console.log(error)
-      // res.redirect("/");
+      
     }
 })
 
@@ -116,7 +132,7 @@ app.post("/editprofile/:id", urlencodedParser,async (req,res) => {
   }
 });
 
-//Delete post
+//Delete regular search donarpost
 app.get("/deletepost/:id",async (req,res) => {
   try {
     const searched = await search_donar_post.findByIdAndDelete({ _id : req.params.id })
@@ -127,7 +143,7 @@ app.get("/deletepost/:id",async (req,res) => {
   }
 });
 
-//edit post
+//edit regular search donarpost
 app.post("/editpost/:id",urlencodedParser,async (req,res) => {
   try {
     const searched = await search_donar_post.findByIdAndUpdate({ _id : req.params.id } , req.body , { new : true , runValidators : true })
@@ -138,6 +154,47 @@ app.post("/editpost/:id",urlencodedParser,async (req,res) => {
   }
 })
 
+//edit present user donar details
+app.post("/presentdonaredit/:id", urlencodedParser, async (req, res) => {
+  try {
+    const searched = await Donar_donate.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true })
+    req.flash("message", "your donar details updated success");
+    res.redirect("/profile")
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+//edit plasma donate post
+app.post("/plasmadonateedit/:id", urlencodedParser, async (req, res) => {
+  try {
+    const searched = await Plasma_post.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true })
+    req.flash("message", "your plasma donar details updated success");
+    res.redirect("/profile")
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+app.post("/plasmasearchedit/:id", urlencodedParser, async (req, res) => {
+  try {
+    const searched = await Plasma_search.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true })
+    req.flash("message", "your plasma patient details updated success");
+    res.redirect("/profile")
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+app.get("/plasmasearchdelete/:id",async (req,res) => {
+  try {
+    const deleplasmapatient = await Plasma_search.findByIdAndDelete({ _id : req.params.id })
+    req.flash("message", "patient deleted success");
+    res.redirect("/profile")
+  } catch (error) {
+    console.log(errors)
+  }
+})
 
 
 //Logout route
@@ -153,6 +210,10 @@ app.get("/logout",(req,res) => {
   })
 })
 
+
+app.get("/test",(req,res) => {
+  res.render("test")
+})
 // //404 page
 // app.get('*', function (req, res) {
 //   res.status(404).render('404');

@@ -1,3 +1,25 @@
+$(document).ready(function () {
+
+    $("#customlocation").click(function () {
+        $("#custloc").show()
+        $("#yourloc").hide()
+        $("#inact").css({ "background-color": "white" })
+        $("#upact").css({ "background-color": "grey" })
+    })
+
+    $("#Yourlocation").click(function () {
+        $("#custloc").hide()
+        $("#yourloc").show()
+        $("#inact").css({ "background-color": "grey" })
+        $("#upact").css({ "background-color": "white" })
+    })
+
+    $("#popup").css("height", "auto")
+
+});
+
+
+
 window.addEventListener("load",function(){
     const longifield = document.getElementById("longitudes");
     const latfield = document.getElementById("latitudes")

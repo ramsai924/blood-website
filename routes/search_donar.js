@@ -75,7 +75,7 @@ app.get("/", urlencodedParser, async (req, res) => {
         
       });
     }
-    
+    // res.json(fdonars)
     res.render("searchdonar", { data: fdonars, userset: userset, userdata , message : req.flash('message') });
   } catch (error) {
     res.status(500).json({ err: error });
@@ -152,15 +152,35 @@ app.post("/donardonate", urlencodedParser, async (req, res) => {
 app.post("/save",urlencodedParser,async (req,res) => {
   try {
     // console.log(req.body)
-    // console.log(req.session.userid)
-    //   const user = await User.findById({ _id : req.session.userid })
+ 
+    // const donardata = await Donar_donate.find({ _id: req.body.save })
+  
+    // const userview = await User.findByIdAndUpdate({ _id: donardata[0].userid }, { $push: { "activity.viewed": req.body.view } }) //saved user data
+    // const user = await User.findByIdAndUpdate({ _id: req.session.userid }, { $push: { "activity.saved" : req.body.save  }})// saved table data
+    // req.flash("message", "user saved");
+    // res.redirect("/searchdonar");
+    const preusersave = await User.findById({ _id: req.session.userid })
     const donardata = await Donar_donate.find({ _id: req.body.save })
-    // console.log(donardata)
-    const userview = await User.findByIdAndUpdate({ _id: donardata[0].userid }, { $push: { "activity.viewed": req.body.view } }) //saved user data
-    const user = await User.findByIdAndUpdate({ _id: req.session.userid }, { $push: { "activity.saved" : req.body.save  }})// saved table data
-    req.flash("message", "user saved");
-    res.redirect("/searchdonar");
-    // res.status(200).json({ user, userview })
+    const userviewed = await User.findById({ _id: donardata[0].userid })
+
+    var arr = preusersave.activity.saved.concat(userviewed.activity.viewed)
+
+    var stringarr = []
+    arr.forEach((e) => {
+      stringarr.push(e.toString())
+    });
+
+    if (stringarr.includes(req.body.save, req.body.view) === false) {
+      const donardata = await Donar_donate.find({ _id: req.body.save })
+      const userview = await User.findByIdAndUpdate({ _id: donardata[0].userid }, { $push: { "activity.viewed": req.body.view } }) //saved user data
+      const user = await User.findByIdAndUpdate({ _id: req.session.userid }, { $push: { "activity.saved": req.body.save } })// saved table data
+      req.flash("message", "user saved");
+      res.redirect("/searchdonar");
+    } else {
+      req.flash("message", "user already saved");
+      res.redirect("/searchdonar");
+    }
+    
   } catch (error) {
       res.status(500).json({ error})
   }
@@ -170,11 +190,8 @@ app.post("/save",urlencodedParser,async (req,res) => {
 //deleting saved data
 app.post("/del",urlencodedParser,async(req,res) => {
   try {
-    // console.log(req.body)
-    // console.log(req.session.userid)
-    //   const user = await User.findById({ _id : req.session.userid })
     const donardata = await Donar_donate.find({ _id: req.body.save })
-    // console.log(donardata)
+
     const userview = await User.findByIdAndUpdate({ _id: donardata[0].userid }, { $pull: { "activity.viewed": req.body.view } }) //saved user data
     const user = await User.findByIdAndUpdate({ _id: req.session.userid }, { $pull: { "activity.saved": req.body.save } })// saved table data
     res.status(200).json({ user, userview })

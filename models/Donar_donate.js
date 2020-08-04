@@ -2,6 +2,7 @@ const mongoose = require("mongoose")
 const geocoder = require("../utils/geocoder");
 const Schema = mongoose.Schema;
 
+mongoose.set('useCreateIndex', true);
 const Donar_donate_schema = Schema({
   Bloodgroup: {
     type: String,
@@ -14,6 +15,10 @@ const Donar_donate_schema = Schema({
   Donatstatus: {
     type: String,
     default: "active",
+  },
+  phoneNumber : {
+    type: String,
+    required: true
   },
   hno: {
     type: String,
@@ -49,6 +54,8 @@ const Donar_donate_schema = Schema({
   },
 });
 
+Donar_donate_schema.index({ "location": 1, "userid": -1, "Bloodgroup": 1 }, { unique: true });
+
 //Geo-location
 Donar_donate_schema.pre('save',async function(next){
     const address = `${this.hno},${this.village},${this.mandal},${this.district},${this.zipcode},${this.state}`;
@@ -64,6 +71,6 @@ Donar_donate_schema.pre('save',async function(next){
     next()
 })
 
-const Donar_donate = mongoose.model('Donar_donate', Donar_donate_schema)
+const Donar_donate = mongoose.model('donar_donate', Donar_donate_schema)
 
 module.exports = Donar_donate;

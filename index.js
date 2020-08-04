@@ -23,7 +23,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     secret: "keyboard cat",
-    // store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
     cookie: {
       maxAge: 365 * 24 * 60 * 60 * 1000,
       sameSite: true,

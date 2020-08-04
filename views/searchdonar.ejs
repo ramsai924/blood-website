@@ -10,8 +10,17 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/public/style/home.css">
   <style>
+    #internet{
+   
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+ 
 
+  z-index: 2;
 
+  text-align: center;
+
+    }
   </style>
 </head>
 
@@ -25,8 +34,8 @@
           <%  if(typeof userset != undefined){ %>
           <% if(userset === true){ %>
 
-          <a href="/">About us</a>
-          <a href="/">Contact us</a>
+          <a href="/searchdonar">Regular</a>
+          <a href="/plasma">Plasma</a>
           <a href="/profile">Profile</a>
           <a href="/logout">Logout</a>
 
@@ -52,11 +61,11 @@
 
 
   <% if(message.length > 0){ %>
-  <div class="alert alert-success alert-dismissible" style="position: fixed;background-color: lightgreen;" role="alert"
-    id="alerts">
-    <strong><%= message %></strong>
+  <div class="alert alert-success alert-dismissible" style="position: fixed;background-color: white;z-index: 100;
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border: none;" id="alerts">
+    <strong style="color: black;"><%= message %></strong>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true" style="text-decoration: none;">&times;</span>
+      <span aria-hidden="true" style="text-decoration: none;color: black;">&times;</span>
     </button>
   </div>
 
@@ -103,11 +112,15 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="userid">userid:</label>
               
-              <input type="text" class="form-control" name="userid" value="<%= userdata._id %>">
-              <input type="text" class="form-control" id="usertype" name="usertype" value="<%= userdata.usertype %>">
               
+              <input type="hidden" class="form-control" name="userid" value="<%= userdata._id %>">
+              <input type="hidden" class="form-control" id="usertype" name="usertype" value="<%= userdata.usertype %>">
+              
+            </div>
+            <div class="form-group">
+              <label for="phoneNumber">phoneNumber :</label>
+              <input type="text" class="form-control" id="phoneNumber" placeholder="Enter phoneNumber" name="phoneNumber">
             </div>
             <div class="form-group">
               <label for="hno">H-no :</label>
@@ -310,7 +323,9 @@
                 <form action="/searchdonar" method="GET">
 
                   <div style="margin: 10px;">
-
+                    <div id="internet">
+                      <p>Slow network is detected</p>
+                    </div>
 
                     <select id="bloodgroup" name="bloodgroup" style="padding: 2px;">
                       <option value="null" id="selected">select Blood group</option>
@@ -325,11 +340,11 @@
                     </select>
                   </div>
                   <div style="margin: 10px;">
-                    <input type="text" name="distance" id="distance" value="" placeholder="Enter Km's">
+                    <input type="text" name="distance" id="distances" value="" placeholder="Enter Km's">
                   </div>
 
                   <div style="margin: 10px;">
-                    <input type="text" name="zipcode" id="zipcode" value="" placeholder="Enter zipcode & city">
+                    <input type="text" name="zipcode" id="zipcodes" value="" placeholder="Enter zipcode & city">
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -351,46 +366,63 @@
 
 
 <div class="container">
+
   <% if(typeof data != 'undefined'){ %>
   <% if(data.length != 0){ %>
+  <table class="table text-center table-bordered"
+    style="margin-top: 10px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+    <thead>
+      <tr>
+  
+        <th scope="col">Name</th>
+        <th scope="col">Blood Group</th>
+        <th scope="col">Address</th>
+  
+      </tr>
+    </thead>
+    <tbody>
   <% data.forEach((dt) => { %>
-  <div style="background: grey;padding: 10px;margin-top: 5px;">
-    <% if(dt.userid != undefined){ %>
-    <div style="display: flex;justify-content: space-around;">
-      <div>
-        <img src="/public/images/<%=  dt.Bloodgroup %>.png" alt="" width="150" height="100"
-          style="border-radius: 50px;margin-top: 9px;">
+    <tr>
+    
+      <td style="cursor: pointer;" data-toggle="modal" data-target="#exampleModal<%= dt._id %>"><%= dt.userid.name %></td>
+      <td><%=  dt.Bloodgroup %></td>
+      <td><%= dt.location.city %></td>
+    
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal<%= dt._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">User Details</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Name : <%= dt.userid.name %></p>
+              <p>Phone PhoneNumber : <%= dt.userid.phoneNumber %></p>
+              <p>Blood Group : <%=  dt.Bloodgroup %></p>
+              <p>Address : <%= dt.village %>,shivampet,medak,telangana,<%= dt.zipcode %></p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <% if(userdata){ %>
+                <form action="/searchdonar/save" method="post" id="formdata">
+                  <input type="hidden" name="save" value="<%= dt._id %>">
+                  <input type="hidden" name="view" value="<%= userdata._id %>">
+                  <input type="submit" value="save" class="btn btn-secondary">
+                </form>
+                <%  } %>
+            </div>
+          </div>
+        </div>
       </div>
-      <div>
-        <p>Name : <%= dt.userid.name %></p>
-        <p>phoneNumber : <%= dt.userid.phoneNumber %></p>
-        <p>Blood group :<%=  dt.Bloodgroup %></p>
-      </div>
-      <div>
-        <p>village : <%= dt.village %></p>
-        <p>City : <%= dt.location.city %></p>
-        <p>zipcode : <%= dt.zipcode %></p>
+    </tr>
 
-      </div>
-
-    </div>
-    <% }else{ %>
-    <p>User details not found</p>
-    <p>Blood group :<%=  dt.Bloodgroup %></p>
-    <% } %>
-
-    <div>
-      <% if(userdata){ %>
-      <form action="/searchdonar/save" method="post" id="formdata">
-        <input type="hidden" name="save" value="<%= dt._id %>">
-        <input type="hidden" name="view" value="<%= userdata._id %>">
-        <input type="submit" value="save">
-      </form>
-      <%  } %>
-    </div>
-
-  </div>
   <% }) %>
+  </tbody>
+  </table>
   <% }else{ %>
 
   <p style="text-align: center;margin-top: 25%;">No Donars found <a href="/searchdonar">Go back...!</a></p>
@@ -399,13 +431,30 @@
 </div>
 
 
-  <script src="/public/scripts/plasma.js"></script>
+  <script src="/public/scripts/serachdonar.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>
   <script>
 
+    setInterval(() => {
+
+        console.log(navigator.connection.downlink)
+        if (navigator.connection.effectiveType == "3g") {
+          document.getElementById("internet").style.display = "block"
+        } else if (navigator.connection.effectiveType == "4g") {
+          document.getElementById("internet").style.display = "none"
+        }
+      }, 100);
+    
+     //time out for warining bootsrap alert
+      setTimeout(() => {
+        document.getElementById("alerts").style.display = "none"
+      }, 3000);
+      
+
+    //navbar action
     function myFunction() {
       var x = document.getElementById("myTopnav");
       if (x.className === "topnav") {
@@ -422,26 +471,38 @@
     }
 
     //top popup event
-    window.addEventListener('scroll', function () {
-      if (window.pageYOffset > 30) {
-        document.querySelector("#topalerts").style.top = "0px"
+    // window.addEventListener('scroll', function () {
+    //   if (window.pageYOffset > 30) {
+    //     document.querySelector("#topalerts").style.top = "0px"
 
-      } else if (window.pageYOffset < 500) { document.getElementById("topalerts").style.top = "-15%" }
-    }); function
-      closealert() { document.getElementById("topalerts").style.top = "-15%" } setTimeout(() => {
-        document.getElementById("alerts").style.display = "none"
-      }, 3000);
+    //   } else if (window.pageYOffset < 500) { document.getElementById("topalerts").style.top = "-15%" }
+    // }); function
+    //   closealert() { document.getElementById("topalerts").style.top = "-15%" } setTimeout(() => {
+    //     document.getElementById("alerts").style.display = "none"
+    //   }, 3000);
 
-    //time out for warining bootsrap alert
-    setTimeout(() => {
-      document.getElementById("alerts").style.display = "none"
-    }, 3000);
-    setTimeout(() => {
-      document.getElementById("alerts1").style.display = "none"
-    }, 3000);
+   
+   
 
     //query selector
-    const { longitute, latitude, distance, bloodgroup } = Qs.parse(location.search, { ignoreQueryPrefix: true });
+   const { longitute, latitude, distance, bloodgroup, zipcode } = Qs.parse(location.search, { ignoreQueryPrefix: true })
+
+    console.log(zipcode)
+
+    if (bloodgroup != undefined) {
+      document.getElementById("selected").value = bloodgroup;
+    }
+    if (zipcode !== undefined) {
+      document.querySelector("#zipcodes").value = zipcode;
+    }
+
+    if (distance !== undefined) {
+      document.querySelector("#distance").value = distance;
+      document.querySelector("#distances").value = distance;
+
+    } else {
+      document.querySelector("#distance").value = "";
+    }
 
   </script>
 

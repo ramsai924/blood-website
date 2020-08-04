@@ -25,8 +25,8 @@
                     <%  if(typeof userset != undefined){ %>
                     <% if(userset === true){ %>
 
-                    <a href="/">About us</a>
-                    <a href="/">Contact us</a>
+                    <a href="/searchdonar">Regular</a>
+                    <a href="/plasma">Plasma</a>
                     <a href="/profile">Profile</a>
                     <a href="/logout">Logout</a>
 
@@ -46,14 +46,12 @@
         </div>
     </div>
 
-    <div class="res-navs">
-
-    </div>
+ 
 
 
     <% if(message.length > 0){ %>
     <div class="alert alert-success alert-dismissible" style="position: fixed;background-color: lightgreen;"
-        role="alert" id="alerts">
+        role="alert" id="closes">
         <strong><%= message %></strong>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true" style="text-decoration: none;">&times;</span>
@@ -84,12 +82,9 @@
                     <div class="modal-body">
                     <%  if(typeof userset != undefined){ %>
                     <% if(userset === true){ %>
+                        <% if(userdata && userdata.usertype == "donar"){ %>
                     <form action="/plasma/plasmadonate" method="POST">
-                        <div class="form-group">
-                            <label for="patientName">patientname : <span style="color: red;">*</span> </label>
-                            <input type="text" class="form-control" id="patientName" placeholder="Enter patientName" name="patientName"
-                                required>
-                        </div>
+                     
                         <div class="form-group">
                             <label for="recoveryDate">Recovered Date : <span style="color: red;">*</span> </label>
                             <input type="date" class="form-control" id="recoveryDate" placeholder="Enter recoveryDate" name="recoveryDate" required>
@@ -114,11 +109,11 @@
                             <label for="PhoneNumber">PhoneNumber: <span style="color: red;">*</span></label>
                             <input type="text" class="form-control" id="PhoneNumber" placeholder="Enter PhoneNumber" name="phoneNumber">
                         </div>
-                        <% if(userdata){ %>
+                        
                         
                         <input type="hidden" class="form-control" name="userid" value="<%= userdata._id %>">
                         
-                        <% } %>
+                        
                         <div class="form-group">
                             <label for="village">village: <span style="color: red;">*</span></label>
                             <input type="text" class="form-control" id="village" placeholder="Enter village" name="village">
@@ -145,6 +140,10 @@
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
+
+                    <% } else { %>
+                        <p>You are not registered as donar click to update</p>
+                    <% } %>
                     <%  } else { %>
                         <p>Please login and try again</p>
                     <% } %>
@@ -169,6 +168,7 @@
                 <div class="modal-body">
                 <%  if(typeof userset != undefined){ %>
                 <% if(userset === true){ %>
+                <% if(userdata && userdata.usertype == "search"){ %>
                 <form action="/plasma/plasmasearch" method="POST">
                     <div class="form-group">
                         <label for="patientName">patientname: <span style="color: red;">*</span> </label>
@@ -205,11 +205,11 @@
                         <label for="PhoneNumber">PhoneNumber: <span style="color: red;">*</span></label>
                         <input type="text" class="form-control" id="PhoneNumber" placeholder="Enter PhoneNumber" name="phoneNumber">
                     </div>
-                    <% if(userdata){ %>
+                    
                 
                     <input type="hidden" class="form-control" name="userid" value="<%= userdata._id %>">
                 
-                    <% } %>
+                    
                 
                     <div class="form-group">
                         <label for="zipcode">Zipcode: <span style="color: red;">*</span></label>
@@ -234,6 +234,10 @@
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
                 <% } else{ %>
+                    <p>You are not resgietred as search edit in profle</p>
+                <% } %>
+
+                <% } else{ %>
                     <p>Please register and try</p>
                 <% } %>
                 <%  } %>
@@ -246,7 +250,7 @@
 
     <div class="container">
         <div>
-            <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2">search Donar</button> <hr>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2">search Donar</button><hr>
 
             <!-- Modal -->
             <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -321,11 +325,11 @@
                                     </select>
                                     </div>
                                     <div style="margin: 10px;">
-                                        <input type="text" name="distance" id="distance" value="" placeholder="Enter Km's">
+                                        <input type="text" name="distance" id="distances" value="" placeholder="Enter Km's">
                                     </div>
                                    
                                    <div style="margin: 10px;">
-                                        <input type="text" name="zipcode" id="zipcode" value="" placeholder="Enter zipcode & city">
+                                        <input type="text" name="zipcode" id="zipcodes" value="" placeholder="Enter zipcode & city">
                                    </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -350,9 +354,60 @@
 
         <% if(typeof donars != undefined){ %>
             <% if(donars.length > 0){ %>
+                <table class="table text-center table-bordered"
+                    style="margin-top: 10px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                    <thead>
+                        <tr>
+                
+                            <th scope="col">Name</th>
+                            <th scope="col">Blood Group</th>
+                            <th scope="col">Address</th>
+                
+                        </tr>
+                    </thead>
                <%  donars.forEach((donar) => { %>
-                    <p><%= donar.bloodGroup %></p>
+                <tr>
+                
+                    <td style="cursor: pointer;" data-toggle="modal" data-target="#exampleModal<%= donar._id %>"><%= donar.userid.name %></td>
+                    <td><%= donar.bloodGroup %></td>
+                    <td><%= donar.location.city %></td>
+                
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal<%= donar._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">User Details</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Name : <%= donar.userid.name %></p>
+                                    <p>Phone PhoneNumber : <%= donar.userid.phoneNumber %></p>
+                                    <p>Blood Group : <%= donar.bloodGroup %></p>
+                                    <p>Recovered Date : <%= donar.recoveryDate %></p>
+                                    <p>Address : <%= donar.village %>,<%= donar.city %>,<%= donar.district %>,<%= donar.state %>,<%= donar.zipcode %></p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <% if(userdata){ %>
+                                    <form action="/plasma/save" method="post" id="formdata">
+                                        <input type="hidden" name="save" value="<%= donar._id %>">
+                                        <input type="hidden" name="view" value="<%= userdata._id %>">
+                                        <input type="submit" value="save" class="btn btn-secondary">
+                                    </form>
+                                    <%  } %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </tr>
+                    
                 <% }) %>
+                    </tbody>
+                </table>
         <% } else { %>
              <p style="text-align: center;margin-top: 20%;">No Donars found <a href="/plasma">Go Back..!!</a></p>
         <% } %>
@@ -360,12 +415,45 @@
         
     </div>
 
+
+   
+
 <script src="/public/scripts/plasma.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>
     <script>
+
+        //time out for warining bootsrap alert
+            setTimeout(() => {
+                document.getElementById("closes").style.display = "none"
+            }, 2000);
+            setTimeout(() => {
+                document.getElementById("closes1").style.display = "none"
+            }, 2000);
+
+
+           const { longitute, latitude, distance, bloodgroup, zipcode } = Qs.parse(location.search, { ignoreQueryPrefix: true })
+
+           console.log(zipcode)
+
+            if (bloodgroup != undefined) {
+                document.getElementById("selected").value = bloodgroup;
+            }
+            if(zipcode !== undefined){
+                document.querySelector("#zipcodes").value = zipcode;
+            }
+
+            if (distance !== undefined) {
+                document.querySelector("#distance").value = distance;
+                document.querySelector("#distances").value = distance;
+                
+            } else {
+                document.querySelector("#distance").value = "";
+            }
+            document.getElementById("range").innerText = distance;
+
 
         function myFunction() {
             var x = document.getElementById("myTopnav");
@@ -393,16 +481,7 @@
                 document.getElementById("alerts").style.display = "none"
             }, 3000);
 
-        //time out for warining bootsrap alert
-        setTimeout(() => {
-            document.getElementById("alerts").style.display = "none"
-        }, 3000);
-        setTimeout(() => {
-            document.getElementById("alerts1").style.display = "none"
-        }, 3000);
-
-        //query selector
-        const { longitute, latitude, distance, bloodgroup } = Qs.parse(location.search, { ignoreQueryPrefix: true });
+        
        
     </script>
   
