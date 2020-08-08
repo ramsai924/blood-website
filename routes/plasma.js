@@ -23,10 +23,21 @@ app.get("/",async (req,res) => {
         var userset; // checking user is login or not
         var userdata;
         var donars ;
+
+        var checkpdonardetails;
+
         const userId = req.session.userid;
         if (userId) {
             userset = true;
             const user = await User.findById({ _id: userId })
+
+            const checkpdonar = await Plasma_post.find({ userid : userId })
+
+            if(checkpdonar.length > 0){
+                checkpdonardetails = true;
+            }else{
+                checkpdonardetails = false;
+            }
             userdata = user;
         } else {
             userset = false;
@@ -76,7 +87,7 @@ app.get("/",async (req,res) => {
         // console.log(donars[0])
 
         // res.json({ donars })
-        res.render("plasma", { userset, userdata, donars, message: req.flash('message') })
+        res.render("plasma", { userset, userdata, donars, checkpdonardetails, message: req.flash('message') })
     } catch (error) {
         console.log(error)
     }

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@900&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/public/style/home.css">
+    <style>
+        #internet {
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Black w/opacity/see-through */
+            z-index: 2;
+            text-align: center;
+        }
+        #regularpatient, #plasmapatient{
+            padding: 15px;
+            margin-top: 10px;
+           border-radius: 5px;
+            background-color: 	#FFFAFA;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+        .active {
+            border-bottom: 3px solid #000080;   
+        }
+    </style>
+</head>
+
+<body>
+
+    <div style="position: relative;top: 50%;">
+        <div class="topnav" id="myTopnav" style="background-color: black;">
+            <div class="container">
+                <a href="/" class=" home-tag" id="home">Home</a>
+                <div id="alignment">
+                    <%  if(typeof userset != undefined){ %>
+                    <% if(userset === true){ %>
+                    <a href="/needs">Needs</a>
+                    <a href="/searchdonar">Regular</a>
+                    <a href="/plasma">Plasma</a>
+                    <a href="/profile">Profile</a>
+                    <a href="/logout">Logout</a>
+
+                    <% }else{ %>
+                    <a href="/needs">Needs</a>
+                    <a href="/searchdonar">Regular</a>
+                    <a href="/plasma">Plasma</a>
+                    <a href="/">Sign
+                        in</a>
+                    <%  } %>
+                    <%  } %>
+                </div>
+                <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+
+                    <i style="font-size: 30px;color: white;" class="fa fa-bars" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+   <div class="container">
+
+    <div style="display: flex;">
+        <h6 style="margin: 10px;cursor: pointer;padding: 5px;" class="active" id="regular">Regular needs</h6>
+        <h6 style="margin: 10px;cursor: pointer;padding: 5px;" id="plasma">plasma Needs</h6>
+    </div><hr>
+
+    <div id="regulardata">
+        <% if(regularpatientpost.length > 0){ %>
+        
+        <%  regularpatientpost.forEach((data) => { %>
+        <div id="regularpatient">
+            <div>
+                <p><strong>Patient Name : </strong><%= data.patientname %></p>
+                <p><strong>Date of Donation : </strong><%= data.date %></p>
+                <p><strong>Blood Group : </strong><%= data.Bloodgroup %></p>
+                <p><strong>Phone Number : </strong><%= data.PhoneNumber %></p>
+                <div style="display:none;margin-top: 15px;" class="more">
+                    <p><strong>hospitalName : </strong><%= data.hospitalName %></p>
+                    <p><strong>Address : </strong><%= data.city %>,<%= data.district %>,<%= data.state %>,<%= data.zipcode %>
+                    </p>
+                </div>
+                <button style="background-color: #000080;border-radius: 75px;border: none; color: white;outline:none;padding-bottom: 4px;"> more <i
+                        id="shows" class="fa fa-info-circle" aria-hidden="true"></i></button>
+            </div>
+        </div>
+        <% }) %>
+        <% }else{ %>
+        <p>No users found</p>
+        <% } %>
+    </div>
+
+    <div id="plasmadata" style="display: none;">
+        <% if(plasmapatientpost.length > 0){ %>
+        
+        <%  plasmapatientpost.forEach((data) => { %>
+        <div id="plasmapatient">
+            <div>
+                <p><strong>Plasma Patient Name : </strong><%= data.patientName %></p>
+                <p><strong>Date of Donation : </strong><%= data.donationdate %></p>
+                <p><strong>Blood Group : </strong><%= data.bloodGroup %></p>
+                <p><strong>Phone Number : </strong><%= data.phoneNumber %></p>
+                <div style="display:none;margin-top: 15px;" class="more2">
+                    <p><strong>hospitalName : </strong><%= data.hospitalName %></p>
+                    <p><strong>Address : </strong><%= data.city %>,<%= data.district %>,<%= data.state %>,<%= data.zipcode %>
+                    </p>
+                </div>
+                <button style="background-color: #000080;border-radius: 75px;border: none; color: white;outline:none;padding-bottom: 4px;"> more <i
+                        id="shows" class="fa fa-info-circle" aria-hidden="true"></i></button>
+            </div>
+        </div>
+        <% }) %>
+        <% }else{ %>
+        <p>No plasma users found</p>
+        <% } %>
+    </div>
+
+   </div>
+
+
+
+    <script src="/public/scripts/needs.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>
+ 
+
+</body>
+
+</html>

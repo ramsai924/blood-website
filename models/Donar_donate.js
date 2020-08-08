@@ -52,6 +52,9 @@ const Donar_donate_schema = Schema({
     },
     city: String,
   },
+  donatedDate : {
+    type : Date
+  }
 });
 
 Donar_donate_schema.index({ "location": 1, "userid": -1, "Bloodgroup": 1 }, { unique: true });

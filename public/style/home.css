@@ -46,6 +46,18 @@ background-color: white;
 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 z-index: 1;
 }
+.fade-scale {
+  transform: scale(0);
+  opacity: 0;
+  -webkit-transition: all .25s linear;
+  -o-transition: all .25s linear;
+  transition: all .25s linear;
+}
+
+.fade-scale.in {
+  opacity: 1;
+  transform: scale(1);
+}
 #popupss{
 position: absolute;
 top: 10%;
@@ -64,9 +76,18 @@ left: 10%;
 #cards{
     padding: 3px;
     margin: 0;
+    border-radius: 10px;
     width: 100%;
     height: auto;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+#cardsclickbtn{
+  margin:10px;
+  background-color: #000080;
+  border-radius: 25px;
+  padding-left:15px;
+  padding-right:16px;
+  padding-bottom: 8px;
 }
 .fa-bars{
     color: black;

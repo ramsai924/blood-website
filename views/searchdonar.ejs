@@ -33,15 +33,16 @@
         <div id="alignment">
           <%  if(typeof userset != undefined){ %>
           <% if(userset === true){ %>
-
+          <a href="/needs">Needs</a>
           <a href="/searchdonar">Regular</a>
           <a href="/plasma">Plasma</a>
           <a href="/profile">Profile</a>
           <a href="/logout">Logout</a>
 
           <% }else{ %>
-          <a href="/">Abouts us</a>
-          <a href="/">Contact us</a>
+          <a href="/needs">Needs</a>
+          <a href="/searchdonar">Regular</a>
+          <a href="/plasma">Plasma</a>
           <a href="/">Sign
             in</a>
           <%  } %>
@@ -95,67 +96,72 @@ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);bor
           <div class="modal-body">
             <%  if(typeof userset != undefined){ %>
             <% if(userset === true){ %>
-              <% if(userdata && userdata.usertype == "donar"){ %>
-            <form action="/searchdonar/donardonate" method="POST">
-            <div class="form-group">
-              <label for="Bloodgroup">Blood group :</label>
-              <select id="Bloodgroup" name="Bloodgroup" class="form-control">
-                <option value="">select</option>
-                <option value="O-">O-</option>
-                <option value="O+">O+ </option>
-                <option value="A-">A-</option>
-                <option value="A+">A+</option>
-                <option value="B-">B-</option>
-                <option value="B+">B+</option>
-                <option value="AB-">AB-</option>
-                <option value="AB+">AB+</option>
-              </select>
-            </div>
-            <div class="form-group">
-              
-              
-              <input type="hidden" class="form-control" name="userid" value="<%= userdata._id %>">
-              <input type="hidden" class="form-control" id="usertype" name="usertype" value="<%= userdata.usertype %>">
-              
-            </div>
-            <div class="form-group">
-              <label for="phoneNumber">phoneNumber :</label>
-              <input type="text" class="form-control" id="phoneNumber" placeholder="Enter phoneNumber" name="phoneNumber">
-            </div>
-            <div class="form-group">
-              <label for="hno">H-no :</label>
-              <input type="text" class="form-control" id="hno" placeholder="Enter hno" name="hno">
-            </div>
-            <div class="form-group">
-              <label for="village">Village :</label>
-              <input type="text" class="form-control" id="village" placeholder="Enter village" name="village">
-            </div>
-            <div class="form-group">
-              <label for="zipcode">Zipcode:</label>
-              <input type="text" class="form-control" id="zipcode" placeholder="Enter zipcode" name="zipcode">
-            </div>
-            <div class="form-group">
-              <label for="mandal">Mandal:</label>
-              <input type="text" class="form-control" id="mandal" placeholder="Enter mandal" name="mandal">
-            </div>
-            <div class="form-group">
-              <label for="district">District:</label>
-              <input type="text" class="form-control" id="district" placeholder="Enter district" name="district">
-            </div>
-            <div class="form-group">
-              <label for="state">State:</label>
-              <input type="text" class="form-control" id="state" placeholder="Enter state" name="state">
-            </div>
-          
-            <!-- Modal footer -->
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-          </form>
-          <% }else { %>
-            <p>If you want to post donar details update your user type to donar and try to post</p>
-          <% } %>
+             <% if(donardetails === false){ %>
+                  <% if(userdata && userdata.usertype == "donar"){ %>
+                  <form action="/searchdonar/donardonate" method="POST">
+                    <div class="form-group">
+                      <label for="Bloodgroup">Blood group :</label>
+                      <select id="Bloodgroup" name="Bloodgroup" class="form-control">
+                        <option value="">select</option>
+                        <option value="O-">O-</option>
+                        <option value="O+">O+ </option>
+                        <option value="A-">A-</option>
+                        <option value="A+">A+</option>
+                        <option value="B-">B-</option>
+                        <option value="B+">B+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="AB+">AB+</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                  
+                  
+                      <input type="hidden" class="form-control" name="userid" value="<%= userdata._id %>">
+                      <input type="hidden" class="form-control" id="usertype" name="usertype" value="<%= userdata.usertype %>">
+                  
+                    </div>
+                    <div class="form-group">
+                      <label for="phoneNumber">phoneNumber :</label>
+                      <input type="text" class="form-control" id="phoneNumber" placeholder="Enter phoneNumber" name="phoneNumber">
+                    </div>
+                    <div class="form-group">
+                      <label for="hno">H-no :</label>
+                      <input type="text" class="form-control" id="hno" placeholder="Enter hno" name="hno">
+                    </div>
+                    <div class="form-group">
+                      <label for="village">Village :</label>
+                      <input type="text" class="form-control" id="village" placeholder="Enter village" name="village">
+                    </div>
+                    <div class="form-group">
+                      <label for="zipcode">Zipcode:</label>
+                      <input type="text" class="form-control" id="zipcode" placeholder="Enter zipcode" name="zipcode">
+                    </div>
+                    <div class="form-group">
+                      <label for="mandal">Mandal:</label>
+                      <input type="text" class="form-control" id="mandal" placeholder="Enter mandal" name="mandal">
+                    </div>
+                    <div class="form-group">
+                      <label for="district">District:</label>
+                      <input type="text" class="form-control" id="district" placeholder="Enter district" name="district">
+                    </div>
+                    <div class="form-group">
+                      <label for="state">State:</label>
+                      <input type="text" class="form-control" id="state" placeholder="Enter state" name="state">
+                    </div>
+                  
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                  </form>
+                  <% }else { %>
+                  <p>If you want to post donar details update your user type to donar and try to post</p>
+                  <% } %>
+              <%}else{ %>
+                <p>Already updated donar details , if you want to make any chnages update details in profile page <a href="/profle">click here!!</a> </p>
+             <% } %>
+           
             <%  } else { %>
             <p>Please login and try again</p>
             <% } %>

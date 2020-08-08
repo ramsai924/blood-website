@@ -25,14 +25,16 @@
                     <%  if(typeof userset != undefined){ %>
                     <% if(userset === true){ %>
 
+                    <a href="/needs">Needs</a>
                     <a href="/searchdonar">Regular</a>
                     <a href="/plasma">Plasma</a>
                     <a href="/profile">Profile</a>
                     <a href="/logout">Logout</a>
 
                     <% }else{ %>
-                    <a href="/">Abouts us</a>
-                    <a href="/">Contact us</a>
+                    <a href="/needs">Needs</a>
+                    <a href="/searchdonar">Regular</a>
+                    <a href="/plasma">Plasma</a>
                     <a href="/" >Sign
                         in</a>
                     <%  } %>
@@ -82,68 +84,74 @@
                     <div class="modal-body">
                     <%  if(typeof userset != undefined){ %>
                     <% if(userset === true){ %>
-                        <% if(userdata && userdata.usertype == "donar"){ %>
-                    <form action="/plasma/plasmadonate" method="POST">
-                     
-                        <div class="form-group">
-                            <label for="recoveryDate">Recovered Date : <span style="color: red;">*</span> </label>
-                            <input type="date" class="form-control" id="recoveryDate" placeholder="Enter recoveryDate" name="recoveryDate" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="bloodGroup">Blood group : <span style="color: red;">*</span></label>
-                            <select id="bloodGroup" name="bloodGroup" class="form-control">
-                                <option value="">select</option>
-                                <option value="O-">O-</option>
-                                <option value="O+">O+ </option>
-                                <option value="A-">A-</option>
-                                <option value="A+">A+</option>
-                                <option value="B-">B-</option>
-                                <option value="B+">B+</option>
-                                <option value="AB-">AB-</option>
-                                <option value="AB+">AB+</option>
-                            </select>
-                        </div>
-                      
-
-                        <div class="form-group">
-                            <label for="PhoneNumber">PhoneNumber: <span style="color: red;">*</span></label>
-                            <input type="text" class="form-control" id="PhoneNumber" placeholder="Enter PhoneNumber" name="phoneNumber">
-                        </div>
-                        
-                        
-                        <input type="hidden" class="form-control" name="userid" value="<%= userdata._id %>">
-                        
-                        
-                        <div class="form-group">
-                            <label for="village">village: <span style="color: red;">*</span></label>
-                            <input type="text" class="form-control" id="village" placeholder="Enter village" name="village">
-                        </div>
-                        <div class="form-group">
-                            <label for="zipcode">Zipcode: <span style="color: red;">*</span></label>
-                            <input type="text" class="form-control" id="zipcode" placeholder="Enter zipcode" name="zipcode">
-                        </div>
-                        <div class="form-group">
-                            <label for="city">city: <span style="color: red;">*</span></label>
-                            <input type="text" class="form-control" id="city" placeholder="Enter city" name="city">
-                        </div>
-                        <div class="form-group">
-                            <label for="district">District: <span style="color: red;">*</span></label>
-                            <input type="text" class="form-control" id="district" placeholder="Enter district" name="district">
-                        </div>
-                        <div class="form-group">
-                            <label for="state">State: <span style="color: red;">*</span></label>
-                            <input type="text" class="form-control" id="state" placeholder="Enter state" name="state">
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
-
-                    <% } else { %>
-                        <p>You are not registered as donar click to update</p>
-                    <% } %>
+                      <%  if(checkpdonardetails === false){ %>
+                            <% if(userdata && userdata.usertype == "donar"){ %>
+                            <form action="/plasma/plasmadonate" method="POST">
+                            
+                                <div class="form-group">
+                                    <label for="recoveryDate">Recovered Date : <span style="color: red;">*</span> </label>
+                                    <input type="date" class="form-control" id="recoveryDate" placeholder="Enter recoveryDate" name="recoveryDate"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="bloodGroup">Blood group : <span style="color: red;">*</span></label>
+                                    <select id="bloodGroup" name="bloodGroup" class="form-control">
+                                        <option value="">select</option>
+                                        <option value="O-">O-</option>
+                                        <option value="O+">O+ </option>
+                                        <option value="A-">A-</option>
+                                        <option value="A+">A+</option>
+                                        <option value="B-">B-</option>
+                                        <option value="B+">B+</option>
+                                        <option value="AB-">AB-</option>
+                                        <option value="AB+">AB+</option>
+                                    </select>
+                                </div>
+                            
+                            
+                                <div class="form-group">
+                                    <label for="PhoneNumber">PhoneNumber: <span style="color: red;">*</span></label>
+                                    <input type="text" class="form-control" id="PhoneNumber" placeholder="Enter PhoneNumber" name="phoneNumber">
+                                </div>
+                            
+                            
+                                <input type="hidden" class="form-control" name="userid" value="<%= userdata._id %>">
+                            
+                            
+                                <div class="form-group">
+                                    <label for="village">village: <span style="color: red;">*</span></label>
+                                    <input type="text" class="form-control" id="village" placeholder="Enter village" name="village">
+                                </div>
+                                <div class="form-group">
+                                    <label for="zipcode">Zipcode: <span style="color: red;">*</span></label>
+                                    <input type="text" class="form-control" id="zipcode" placeholder="Enter zipcode" name="zipcode">
+                                </div>
+                                <div class="form-group">
+                                    <label for="city">city: <span style="color: red;">*</span></label>
+                                    <input type="text" class="form-control" id="city" placeholder="Enter city" name="city">
+                                </div>
+                                <div class="form-group">
+                                    <label for="district">District: <span style="color: red;">*</span></label>
+                                    <input type="text" class="form-control" id="district" placeholder="Enter district" name="district">
+                                </div>
+                                <div class="form-group">
+                                    <label for="state">State: <span style="color: red;">*</span></label>
+                                    <input type="text" class="form-control" id="state" placeholder="Enter state" name="state">
+                                </div>
+                            
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                            
+                            <% } else { %>
+                            <p>You are not registered as donar click to update</p>
+                            <% } %>
+                        <% }else{ %>
+                            <p>You have updated your plasma donar details .If you want to make any changes please update in profile page <a href="">click here</a></p>
+                       <%  } %>
+                       
                     <%  } else { %>
                         <p>Please login and try again</p>
                     <% } %>
@@ -368,7 +376,7 @@
                <%  donars.forEach((donar) => { %>
                 <tr>
                 
-                    <td style="cursor: pointer;" data-toggle="modal" data-target="#exampleModal<%= donar._id %>"><%= donar.userid.name %></td>
+                    <td style="cursor: pointer;" data-toggle="modal" data-target="#exampleModal<%= donar._id %>" style="overflow-x: scroll;"><%= donar.userid.name %></td>
                     <td><%= donar.bloodGroup %></td>
                     <td><%= donar.location.city %></td>
                 

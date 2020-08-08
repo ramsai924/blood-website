@@ -21,12 +21,14 @@
                        
                             <a  href="/profile">About us</a>
                             <a  href="/profile">Contact us</a>
+                            <a href="/needs">Needs</a>
                             <a  href="/profile">Profile</a>
                             <a  href="/logout">Logout</a>
                     
                        <% }else{ %>
                             <a  href="/profile">Abouts us</a>
                             <a  href="/profile">Contact us</a>
+                            <a href="/needs">Needs</a>
                             <a href="/profile" data-toggle="modal" data-target="#myModal" style="background: transparent;">Sign in</a>
                       <%  } %>
                   <%  } %>
@@ -104,17 +106,17 @@ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);bor
     
     
         <!-- The Modal -->
-        <div class="modal modal fade" id="myModal" style="margin-top: 20px;">
+        <div class="modal modal fade" id="myModal" style="margin-top: 20px;border-radius: 10px;">
             <div class="modal-dialog">
                 <div class="modal-content">
     
                     <!-- Modal Header -->
                     <div class="modal-header" style="display: flex;justify-content: space-around;">
                        
-                            <div style="padding: 5px 10px 10px 20px;background-color: white;width: 100%;margin: 2px;text-align: center;cursor: pointer;" id="upact">
+                            <div style="border-radius:5px;padding: 5px 10px 10px 20px;background-color: white;width: 100%;margin: 2px;text-align: center;cursor: pointer;" id="upact">
                                 <h6 class="modal-title" id="signup">sign up</h6>
                             </div>
-                            <div style="padding: 5px 10px 10px 20px;background-color: grey;width: 100%;margin: 2px;text-align: center;cursor: pointer;" id="inact">
+                            <div style="border-radius:5px;padding: 5px 10px 10px 20px;background-color: grey;width: 100%;margin: 2px;text-align: center;cursor: pointer;" id="inact">
                                 <h6 class="modal-title" id="signin">sign in</h6>
                             </div>
                        
@@ -144,8 +146,8 @@ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);bor
                                     <select id="usertype" name="usertype" class="form-control">
                                         <option value="donar">Register as Donar</option>
                                         <option value="search">Searching donar</option>
-                                        <option value="pdonar">Plasma donar</option>
-                                        <option value="psearch">Searching Plasma donar</option>
+                                        <option value="bloodbank">Blood Bank</option>
+                                     
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -205,36 +207,36 @@ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);bor
                 <div class="col-md-4" style="margin-top:6px;text-align: center;">
                     <div id="cards">
                     
-                    <div style="background-color: #00aeef;padding: 5px;">
+                    <div style="background-color: #00aeef;padding: 5px;border-radius: 5px;">
                         <img src="/public/images/search.png" width="100" height="100" style="padding: 10px;margin-top: 20px;">
                         <p class="card-title" style="font-weight: 700;">Search Donar</p>
                     </div>
                     <p style="padding: 5px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam unde.</p>
-                    <a href="/searchdonar" class="btn btn-primary">click here</a>
+                    <a href="/searchdonar" class="btn btn-primary" id="cardsclickbtn">click here</a>
                     </div>
                 </div>
                 <div class="col-md-4" style="margin-top:6px;text-align: center;">
                     <div id="cards">
                     
-                    <div style="background-color: #00aeef;padding: 5px;">
+                    <div style="background-color: #00aeef;padding: 5px;border-radius: 5px;">
                         <img src="/public/images/banks.png" width="100" height="100" style="padding: 10px;margin-top: 20px;">
                         <p class="card-title" style="font-weight: 700;">Blood Banks</p>
                          
                     </div>
                     <p style="padding: 5px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam unde.</p>
-                    <a href="#"  class="btn btn-primary" >click here</a>
+                    <a href="#"  class="btn btn-primary" id="cardsclickbtn">click here</a>
                     </div>
                 </div>
                 <div class="col-md-4" style="margin-top:6px;text-align: center;">
                     <div id="cards">
                 
-                        <div style="background-color: #00aeef;padding: 5px;">
+                        <div style="background-color: #00aeef;padding: 5px;border-radius: 5px;">
                             <img src="/public/images/banks.png" width="100" height="100" style="padding: 10px;margin-top: 20px;">
-                            <p class="card-title" style="font-weight: 700;">plasma</p>
+                            <p class="card-title" style="font-weight: 700;">Plasma</p>
                 
                         </div>
                         <p style="padding: 5px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam unde.</p>
-                        <a href="/plasma" class="btn btn-primary">click here</a>
+                        <a href="/plasma" class="btn btn-primary" id="cardsclickbtn">click here</a>
                     </div>
                 </div>
             </div>

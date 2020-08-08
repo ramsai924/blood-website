@@ -105,13 +105,8 @@ app.get("/profile",auth,async (req,res) => {
       
       const searched = await search_donar_post.find({ userid: req.session.userid })
       search = searched;
-      ////////////////////////
-
-    
-      console.log(userset.activity)
-
-
-      //////////////////////
+     
+      // console.log(userset.activity.plasmasaved)
       res.render("profile", { plasmapost, plasmasearch, userset, userData, search , message : req.flash('message') })
     
     } catch (error) {
@@ -176,6 +171,7 @@ app.post("/plasmadonateedit/:id", urlencodedParser, async (req, res) => {
   }
 })
 
+//editing plasma search post
 app.post("/plasmasearchedit/:id", urlencodedParser, async (req, res) => {
   try {
     const searched = await Plasma_search.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true })
@@ -185,7 +181,7 @@ app.post("/plasmasearchedit/:id", urlencodedParser, async (req, res) => {
     console.log(error)
   }
 })
-
+//deleting plasma donar post
 app.get("/plasmasearchdelete/:id",async (req,res) => {
   try {
     const deleplasmapatient = await Plasma_search.findByIdAndDelete({ _id : req.params.id })
@@ -196,6 +192,39 @@ app.get("/plasmasearchdelete/:id",async (req,res) => {
   }
 })
 
+//delete viewed user from profile
+app.get("/profile/viewuserdel/:id", urlencodedParser, async (req, res) => {
+  try {
+    const userview = await User.findByIdAndUpdate({ _id: req.session.userid }, { $pull: { "activity.viewed": req.params.id } }) //saved user data
+    req.flash("message", "viewed user deleted");
+    res.redirect("/profile")
+   
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+//delete saved user from profile
+app.get("/profile/saveduserdel/:id",async (req,res) => {
+  try {
+    const userdata = await User.findByIdAndUpdate({ _id: req.session.userid }, { $pull: { "activity.saved": req.params.id } })
+    req.flash("message", "saved user deleted");
+    res.redirect("/profile")
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+//delete plasma saved user from profile
+app.get("/profile/savedplasmauserdel/:id", async (req, res) => {
+  try {
+    const userdata = await User.findByIdAndUpdate({ _id: req.session.userid }, { $pull: { "activity.plasmasaved": req.params.id } })
+    req.flash("message", "saved plasma user deleted");
+    res.redirect("/profile")
+  } catch (error) {
+    console.log(error)
+  }
+})
 
 //Logout route
 app.get("/logout",(req,res) => {
@@ -206,17 +235,11 @@ app.get("/logout",(req,res) => {
     }
 
     res.clearCookie("sid")
+    req.flash("message", "Logged out successfully");
     res.redirect("/")
   })
 })
 
 
-app.get("/test",(req,res) => {
-  res.render("test")
-})
-// //404 page
-// app.get('*', function (req, res) {
-//   res.status(404).render('404');
-// });
 
 module.exports = app;

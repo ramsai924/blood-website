@@ -4,11 +4,11 @@ const userRoute = require('./routes/user')
 const donardonate = require('./routes/Donar_donate')
 const searchdonars = require('./routes/search_donar')
 const search_donar_post = require('./routes/serach_donar_post')
+const needs = require('./routes/needs')
 const plasma = require("./routes/plasma")
 const mongoose = require('mongoose')
 const session = require('express-session')
 const flash = require('connect-flash')
-const Swal = require("sweetalert2");
 const MongoStore = require("connect-mongo")(session);
 const test = require('./routes/test')
 const dotenv = require("dotenv")
@@ -49,9 +49,8 @@ app.set('view engine','ejs')
 
 //Routes
 app.use('/',userRoute)
-// app.use('/donardonate', donardonate)
 app.use('/searchdonar', searchdonars);
-// app.use('/searchdonarpost', search_donar_post);
+app.use("/needs",needs)
 app.use('/plasma', plasma)
 app.use('/test',test)
 

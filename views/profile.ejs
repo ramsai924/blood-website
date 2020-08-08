@@ -19,8 +19,48 @@
             padding: 2px;
         }
         .active {
-            border-bottom: 3px solid red;   
-            }
+            border-bottom: 3px solid #000080;   
+        }
+        #savedcard{
+            margin: 10px;
+            border-radius: 5px;
+            background-color: 	#FFFAFA;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+       #profile_card{
+           padding: 15px;
+           border-radius: 5px;
+            background-color: 	#FFFAFA;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+       }
+       #donar_details_card{
+            padding: 15px;
+            border-radius: 5px;
+            background-color: 	#FFFAFA;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
+       }
+        #plasma_donar_post{
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 12px;
+            background-color: 	#FFFAFA;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
+       }
+      #plasma_patient_details{
+          padding: 15px;
+            border-radius: 5px;
+            margin-top: 12px;
+            background-color: 	#FFFAFA;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
+      }
+      #regular_donar_details{
+           padding: 15px;
+            border-radius: 5px;
+            margin-top: 12px;
+            margin-bottom : 10px;
+            background-color: 	#FFFAFA;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
+      }
     </style>
     <title>Document</title>
 </head>
@@ -36,14 +76,16 @@
                 
                 <% if(userset){ %>
 
+                <a href="/needs">Needs</a>
                 <a href="/searchdonar">Regular</a>
                 <a href="/plasma">Plasma</a>
                 <a href="/profile">Profile</a>
                 <a href="/logout">Logout</a>
 
                 <% }else{ %>
-                <a href="/">Abouts us</a>
-                <a href="/">Contact us</a>
+                <a href="/needs">Needs</a>
+                <a href="/searchdonar">Regular</a>
+                <a href="/plasma">Plasma</a>
                 <a href="/">Sign
                     in</a>
                 <%  } %>
@@ -82,13 +124,13 @@ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);bor
            
             
                 <div class="container" style="margin-top: 33px;">
-                    <h6>User Details</h6> <hr>
-                    <div>
-                        <p>Name : <%= userset.name %></p>
-                        <p>Email : <%= userset.email %></p>
-                        <p>Phone Number : <%= userset.phoneNumber %></p>
-                        <p>User Type : <%= userset.usertype %></p>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#model<%= userset._id %>">
+                    <h6>Profile</h6> <hr>
+                    <div id="profile_card">
+                        <p><strong>Name</strong> : <%= userset.name %></p>
+                        <p><strong>Email </strong>: <%= userset.email %></p>
+                        <p><strong>Phone Number</strong> : <%= userset.phoneNumber %></p>
+                        <p><strong>User Type</strong> : <%= userset.usertype %></p>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#model<%= userset._id %>" style="background-color: #000080;border-radius: 25px;padding-left:15px;padding-right:16px">
                             Edit
                         </button>
             
@@ -165,13 +207,14 @@ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);bor
           
                 <% if(userData){ %>
                 <% userData.forEach((data) => { %>
-                <div style="background-color: grey;margin: 5px;padding: 10px;">
-                    <div id="banner">Your Donar Details</div>
-                    <p>Blood Group : <%= data.Bloodgroup %></p>
-                    <p>Status : <%= data.Donatstatus %></p>
-                    <p>Address : <%= data.village %> , <%= data.district %> , <%= data.state %> , <%= data.zipcode %></p>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#model<%= data._id %>">
-                        Edit
+                <div id="donar_details_card">
+                    <p><strong>Donar Details</strong></p>
+                    <hr>
+                    <p><strong>Blood Group</strong> : <%= data.Bloodgroup %></p>
+                    <p><strong>Status</strong> : <%= data.Donatstatus %></p>
+                    <p><strong>Address</strong> : <%= data.village %> , <%= data.district %> , <%= data.state %> , <%= data.zipcode %></p>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#model<%= data._id %>" style="background-color: #000080;border-radius: 25px;padding-left:15px;padding-right:16px">
+                        view & Edit
                     </button>
                     
                     <!-- popup model for  present user donar details -->
@@ -267,15 +310,16 @@ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);bor
            
                 <% if(plasmapost.length > 0){ %>
                 <%  plasmapost.forEach((ppost) => { %>
-                <div style="background-color: grey;margin: 5px;padding: 10px;">
-                    <div id="banner">plasma Donar Details</div>
-                    <p>Blood Group : <%= ppost.bloodGroup %></p>
-                    <p>Status : <%= ppost.Donatstatus %></p>
+                <div id="plasma_donar_post">
+                 
+                    <p><strong>Plasma donar details</strong></p><hr>
+                    <p><strong>Blood Group</strong> : <%= ppost.bloodGroup %></p>
+                    <p><strong>Status </strong>: <%= ppost.Donatstatus %></p>
                     
-                    <p>Recovered Date : <%= ppost.recoveryDate %></p>
-                    <p>Adress : <%= ppost.zipcode %></p>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#model<%= ppost._id %>">
-                        Edit
+                    <p><strong>Recovered Date</strong> : <%= ppost.recoveryDate %></p>
+                   
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#model<%= ppost._id %>" style="background-color: #000080;border-radius: 25px;padding-left:15px;padding-right:16px">
+                        view & Edit
                     </button>
                     <!-- <a href="/deleteposts/<%= ppost._id %>">Delete</a> -->
 
@@ -372,18 +416,20 @@ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);bor
                 <% if(search.length != 0){ %>
             
                 <% search.forEach((data) => { %>
-                <div style="background: grey;margin:5px;padding: 10px;">
-                    <div id="banner">Patient Details</div>
-                    <p>Blood Group : <%= data.Bloodgroup %></p>
-                    <p>Donar status : <%= data.Donatstatus %></p>
-                    <p>Patient Name : <%= data.patientname %></p>
-                    <p>Donataion Date : <%= data.date %></p>
-                    <p>Hospital Name : <%= data.hospitalName %></p>
-                    <p>Address : <%= data.city %> , <%= data.district %> , <%= data.state %> , <%= data.zipcode %></p>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#model<%= data._id %>">
-                        Edit
+                <div id="regular_donar_details">
+                    <p><strong>Plasma donar details</strong></p>
+                    <hr>
+                    <p><strong>Blood Group</strong> : <%= data.Bloodgroup %></p>
+                    <p><strong>Donar status</strong> : <%= data.Donatstatus %></p>
+                    <p><strong>Patient Name</strong> : <%= data.patientname %></p>
+                   
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#model<%= data._id %>" style="background-color: #000080;border-radius: 25px;padding-left:15px;padding-right:16px">
+                        View & Edit
                     </button>
-                    <a href="/deletepost/<%= data._id %>">Delete</a>
+                    <a href="/deletepost/<%= data._id %>"><button
+                            style="background-color: #000080;border-radius: 75px;border: none; color: white;padding: 4px;padding-left: 10px;padding-right: 10px;"><i
+                                class="fa fa-trash" aria-hidden="true"></i></button></a>
+                    <!-- <a href="/deletepost/<%= data._id %>">Delete</a> -->
             
                     <!-- popup model for post edit -->
                     <div class="modal fade" id="model<%= data._id %>" tabindex="-1" role="dialog"
@@ -485,18 +531,19 @@ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);bor
                 <% if(plasmasearch.length != 0){ %>
                 
                 <% plasmasearch.forEach((data) => { %>
-                <div style="background: grey;margin:5px;padding: 10px;">
-                    <div id="banner">plasma Patient Details</div>
+                <div id="plasma_patient_details">
+                    <p><strong>plasma Patient Details</strong></p>
+                    <hr>
                     <p>patientName : <%= data.patientName %></p>
                     <p>bloodGroup : <%= data.bloodGroup %></p>
                     <p>Donar status : <%= data.Donatstatus %></p>
-                    <p>Donation Date : <%= data.donationdate %></p>
-                    <p>Hospital Name : <%= data.hospitalName %></p>
-                    <p>Address : <%= data.city %> , <%= data.district %> , <%= data.state %> , <%= data.zipcode %></p>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#model<%= data._id %>">
-                        Edit
+                   
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#model<%= data._id %>" style="background-color: #000080;border-radius: 25px;padding-left:15px;padding-right:16px">
+                        view & Edit
                     </button>
-                    <a href="/plasmasearchdelete/<%= data._id %>">Delete</a>
+                    <a href="/plasmasearchdelete/<%= data._id %>"><button style="background-color: #000080;border-radius: 75px;border: none; color: white;padding: 4px;padding-left: 10px;padding-right: 10px;"><i
+                                class="fa fa-trash" aria-hidden="true"></i></button></a>
+                    <!-- <a href="/plasmasearchdelete/<%= data._id %>">Delete</a> -->
                 
                     <!-- popup model for plasma search post edit -->
                     <div class="modal fade" id="model<%= data._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -608,14 +655,51 @@ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);bor
 
         <div id="saved" style="display: none;">
             
-                <% if(userset.activity.saved.length > 0){ %>
-                    <% userset.activity.saved.forEach((data) => { %>
-                        <div style="background-color: grey;">
-                            <p><%= data.Bloodgroup %></p>
-                            <p><%= data.userid.name %></p>
-                            <p><%= data.userid.phoneNumber %></p>
+                <% if(userset.activity.saved.length > 0 || userset.activity.plasmasaved.length > 0){ %>
+                 <!-- <% if(userset.activity.saved.length != 0){ %> -->
+                        <% userset.activity.saved.forEach((data) => { %>
+                        <div id="savedcard">
+                            <div style="padding: 10px;">
+                                <p><strong>Name : </strong> <%= data.userid.name %> </p>
+                                <p><strong>Blood Group : </strong><%= data.Bloodgroup %></p>
+                                <div style="display:none;margin-top: 15px;" class="more">
+                                    <p><strong>Phone Number : </strong><%= data.userid.phoneNumber %></p>
+                                    <p><strong>Address : </strong><%= data.village %>,<%= data.district %>,<%= data.state %>,<%= data.zipcode %>
+                                    </p>
+                                </div>
+                                <button style="background-color: #000080;border-radius: 75px;border: none; color: white;outline: none;padding-bottom: 4px;"> more <i id="shows"
+                                        class="fa fa-info-circle" aria-hidden="true"></i></button>
+                                <a href="/profile/saveduserdel/<%= data._id %>"><button
+                                        style="background-color: #000080;border-radius: 75px;border: none; color: white;"><i class="fa fa-trash"
+                                            aria-hidden="true"></i></button></a>
+                        
+                            </div>
                         </div>
-                   <%  }) %>
+                        <%  }) %>
+                 <!-- <% } %> -->
+
+               <!-- <% if(userset.activity.plasmasaved.length != 0){ %> -->
+                    <% userset.activity.plasmasaved.forEach((data) => { %>
+                    <div id="savedcard">
+                        <div style="padding: 10px;">
+                            <p><strong>Name : </strong> <%= data.userid.name %> </p>
+                            <p><strong>plasma Blood Group : </strong><%= data.bloodGroup %></p>
+                            <div style="display:none;margin-top: 15px;" class="more">
+                                <p><strong>Phone Number : </strong><%= data.phoneNumber %></p>
+                                <p><strong>Address : </strong><%= data.village %>,<%= data.district %>,<%= data.state %>,<%= data.zipcode %>
+                                </p>
+                            </div>
+                            <button style="background-color: #000080;border-radius: 75px;border: none; color: white;outline: none;padding-bottom: 4px;"> more <i id="shows"
+                                    class="fa fa-info-circle" aria-hidden="true"></i></button>
+                            <a href="/profile/savedplasmauserdel/<%= data._id %>"><button
+                                    style="background-color: #000080;border-radius: 75px;border: none; color: white;"><i class="fa fa-trash"
+                                        aria-hidden="true"></i></button></a>
+                    
+                        </div>
+                    </div>
+                    <%  }) %>
+               <!-- <% } %> -->
+                   
                 <% }else{ %>
                     <p>No users saved</p>
                 <% } %>
@@ -625,9 +709,22 @@ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);bor
         <div id="viewed" style="display: none;">
             
                 <% if(userset.activity.viewed.length > 0){ %>
-                    <div style="background-color: red;height: 100px;">
-                    
-                    </div>
+                   <% userset.activity.viewed.forEach((data) => { %>
+                        <div id="savedcard">
+                            <div style="padding: 10px;">
+                                <p><strong>Name : </strong> <%= data.name %> </p>
+                                <p><strong>Email : </strong><%= data.email %></p>
+                                <p><strong>Phone Number : </strong><%= data.phoneNumber %></p>
+                                 
+                                <!-- <button style="background-color: #000080;border-radius: 75px;border: none; color: white;"> more <i id="shows"
+                                        class="fa fa-info-circle" aria-hidden="true"></i></button> -->
+                                <a href="/profile/viewuserdel/<%= data._id %>"><button
+                                        style="background-color: #000080;border-radius: 75px;border: none; color: white;">Delete &nbsp;<i class="fa fa-trash"
+                                            aria-hidden="true"></i></button></a>
+                        
+                            </div>
+                        </div>
+                   <% }) %>
                 <% }else{ %>
                 <p>No views found</p>
                 <% } %>
@@ -704,6 +801,17 @@ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);bor
             setTimeout(() => {
                 document.getElementById("alerts1").style.display = "none"
             }, 3000);
- 
+            
+
+            //show more button
+           var actions = document.querySelector("#saved")
+        
+            actions.addEventListener("click",(e) => {
+                var target = e.target;
+                // console.log(target.parentNode.childNodes)
+                if(target.parentNode.childNodes[5].className === 'more'){
+                    $(target.parentNode.childNodes[5]).toggle("slow")
+                }
+            })
 </script>
 </html>
